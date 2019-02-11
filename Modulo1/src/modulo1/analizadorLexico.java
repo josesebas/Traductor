@@ -281,10 +281,23 @@ public class analizadorLexico {
                     break;
                 case 10:
                     if (this.texto_analizar.charAt(indice)=='f') {
-                        this.respuesta+="palabra reservada if\t\t\t\t"+this.valor_analizado+"\n";
-                        this.valor_analizado="";
                         indice++;
-                        estado = 0;
+                        if (indice<longitud) {
+                             if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                estado=4;
+                            }else{
+                                this.respuesta+="palabra reservada if\t\t\t\t"+this.valor_analizado+"\n";
+                                this.valor_analizado="";
+                                estado = 0;
+                            }
+                        }else{
+                               this.respuesta+="palabra reservada if\t\t\t\t"+this.valor_analizado+"\n";
+                                this.valor_analizado="";
+                                estado = 0;
+                        }
+                       
+                        
+                        
 //                        this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\n");
                     }else if(this.texto_analizar.charAt(indice)=='n'){
                         indice++;
@@ -293,10 +306,22 @@ public class analizadorLexico {
                         if (indice<longitud) {   
                             if (this.texto_analizar.charAt(indice)=='t') {
                                 this.valor_analizado+=this.texto_analizar.charAt(indice);
-                                this.respuesta+="palabra reservada int \t\t\t\t"+this.valor_analizado+"\n";
-                                this.valor_analizado="";
                                 indice++;
-                                estado=0;
+                                if (indice<longitud) {
+                                    if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                        estado=4;
+                                    }else{
+                                        this.respuesta+="palabra reservada int \t\t\t\t"+this.valor_analizado+"\n";
+                                        this.valor_analizado="";
+                                        estado=0; 
+                                    }
+                                }else{
+                                    this.respuesta+="palabra reservada int \t\t\t\t"+this.valor_analizado+"\n";
+                                        this.valor_analizado="";
+                                        estado=0;
+
+                                }
+                                
                             }else{
                                 estado = 4;
                                 //this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
@@ -327,10 +352,22 @@ public class analizadorLexico {
                                             
                                             if (this.texto_analizar.charAt(indice)=='e') {
                                                this.valor_analizado+=this.texto_analizar.charAt(indice);
-                                               this.respuesta +="palabra reservada while\t\t\t\t"+this.valor_analizado+"\n";
-                                               this.valor_analizado="";
                                                indice++;
-                                               estado=0;
+                                                if (indice<longitud) {
+                                                    if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                                        estado=4;
+
+                                                    }else{
+                                                        this.respuesta +="palabra reservada while\t\t\t\t"+this.valor_analizado+"\n";
+                                                        this.valor_analizado="";
+                                                        estado=0;
+                                                    }
+                                                }else{
+                                                    this.respuesta +="palabra reservada while\t\t\t\t"+this.valor_analizado+"\n";
+                                                        this.valor_analizado="";
+                                                        estado=0;
+                                                }
+                                                
                                             }else{
                                                 //this.respuesta+="identificador\t\t\t\t"+this.valor_analizado+"\n";
                                                 //this.valor_analizado="";
@@ -364,6 +401,7 @@ public class analizadorLexico {
                         this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
                         if (indice<longitud) {
                             if (this.texto_analizar.charAt(indice)=='t') {
+                                this.valor_analizado+='t';
                                 indice++;
                                 if (indice<longitud) {
                                     this.valor_analizado+=this.texto_analizar.charAt(indice);
@@ -378,9 +416,22 @@ public class analizadorLexico {
                                                       if (this.texto_analizar.charAt(indice)=='n') {
                                                           this.valor_analizado+=this.texto_analizar.charAt(indice);
                                                           indice++;
-                                                        this.respuesta +="palabra reservada return\t\t\t\t"+this.valor_analizado+"\n";
-                                                        this.valor_analizado="";
-                                                          estado=0;
+                                                          
+                                                          if (indice<longitud) {
+                                                              if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                                                estado =4;
+                                                            }else{
+                                                                  this.respuesta +="palabra reservada return\t\t\t\t"+this.valor_analizado+"\n";
+                                                                  this.valor_analizado="";
+                                                                  estado=0;
+                                                            }
+                                                          }else{
+                                                              this.respuesta +="palabra reservada return\t\t\t\t"+this.valor_analizado+"\n";
+                                                                this.valor_analizado="";
+                                                                estado=0;
+                                                          }
+                                                          
+                                                       
                                                     }else{
                                                           estado=4;
                                                       }
@@ -426,9 +477,20 @@ public class analizadorLexico {
                                     if (this.texto_analizar.charAt(indice)=='e') {
                                         this.valor_analizado+=this.texto_analizar.charAt(indice);
                                         indice++;
-                                        this.respuesta +="palabra reservada else\t\t\t\t"+this.valor_analizado+"\n";
-                                        this.valor_analizado="";
-                                        estado=0;
+                                        if (indice<longitud) {
+                                            if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                                estado=4;
+                                            }else{
+                                                this.respuesta +="palabra reservada else\t\t\t\t"+this.valor_analizado+"\n";
+                                                this.valor_analizado="";
+                                                estado=0;
+                                            }
+                                        }else{
+                                            this.respuesta +="palabra reservada else\t\t\t\t"+this.valor_analizado+"\n";
+                                            this.valor_analizado="";
+                                            estado=0;
+                                        }
+                                        
                                     }else{
                                         estado=4;
                                     }
@@ -462,11 +524,23 @@ public class analizadorLexico {
                                         if (indice<longitud) {
                                             
                                             if (this.texto_analizar.charAt(indice)=='t') {
-                                                this.valor_analizado+=this.texto_analizar.charAt(indice);
-                                               this.respuesta +="palabra reservada float\t\t\t\t"+this.valor_analizado+"\n";
-                                               this.valor_analizado="";
+                                               this.valor_analizado+=this.texto_analizar.charAt(indice);
                                                indice++;
-                                               estado=0;
+                                                if (indice<longitud) {
+                                                    if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                                        estado=4;
+                                                    }else{
+                                                        this.respuesta +="palabra reservada float\t\t\t\t"+this.valor_analizado+"\n";
+                                                        this.valor_analizado="";
+                                                        estado=0;
+                                                    }
+                                                }else{
+                                                    this.respuesta +="palabra reservada float\t\t\t\t"+this.valor_analizado+"\n";
+                                                    this.valor_analizado="";
+
+                                                    estado=0;
+                                                }
+                                               
                                             }else{
                                                 estado=4;
                                             }
@@ -505,9 +579,20 @@ public class analizadorLexico {
                                     if (this.texto_analizar.charAt(indice)=='d') {
                                         this.valor_analizado+=this.texto_analizar.charAt(indice);
                                         indice++;
-                                        this.respuesta +="palabra reservada void\t\t\t\t"+this.valor_analizado+"\n";
-                                        this.valor_analizado="";
-                                        estado=0;
+                                        if (indice<longitud) {
+                                            if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                                estado=4;
+                                            }else{
+                                                this.respuesta +="palabra reservada void\t\t\t\t"+this.valor_analizado+"\n";
+                                                this.valor_analizado="";
+                                                estado=0;
+                                            }
+                                        }else{
+                                            this.respuesta +="palabra reservada void\t\t\t\t"+this.valor_analizado+"\n";
+                                            this.valor_analizado="";
+                                            estado=0;  
+                                        }
+                                        
                                     }else{
                                         estado=4;
                                     }
@@ -532,7 +617,7 @@ public class analizadorLexico {
                     this.valor_analizado="";
                     indice++;
                     break;
-                default:
+                default:    
             }
             
             
