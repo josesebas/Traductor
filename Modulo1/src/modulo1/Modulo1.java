@@ -5,6 +5,7 @@
  */
 package modulo1;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Modulo1 {
@@ -20,7 +21,11 @@ public class Modulo1 {
         String cadena = entrada.nextLine();
         
         analizadorLexico lex = new analizadorLexico(cadena);
-        System.out.println(lex.analizar());
+        ArrayList<token> tokens = lex.analizar();
+        int tam = tokens.size();
+        for (int i = 0; i < tam; i++) {
+            System.out.println(tokens.get(i).numero+"\t"+tokens.get(i).simbolo);
+        }
     
     }
     

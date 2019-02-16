@@ -1,17 +1,20 @@
 package modulo1;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Eduardo
  */
 public class analizadorLexico {
     String texto_analizar;
-    String respuesta="";
+    ArrayList<token> respuesta = new ArrayList<token>();
     String valor_analizado="";
     analizadorLexico(String cadena){
         this.texto_analizar = cadena;
     }
-    public String analizar(){
+    
+    public ArrayList analizar(){
         int longitud = this.texto_analizar.length();
         //System.out.println(longitud);
         int indice = 0;
@@ -29,121 +32,137 @@ public class analizadorLexico {
                     }else if (Character.isDigit(this.texto_analizar.charAt(indice))) {
                         estado = 1;      
                         indice++;
-                        this.respuesta= finCadena(indice,longitud, this.respuesta, "entero\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice,longitud, 1, "entero", this.valor_analizado);
                     //---------------------------------------ANALIZA CADENAS
                     }else if(this.texto_analizar.charAt(indice)=='"'){
                         estado = 2;
                         indice++;
-                        this.respuesta = finCadena(indice, longitud, this.respuesta, "invalido\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, -1,"invalido",this.valor_analizado);
                     //---------------------------------------ANALIZA PALABRAS RESERVADAS
                     }else if(this.texto_analizar.charAt(indice)=='i'){
                         estado = 10;
                         indice++;
-                        this.respuesta=finCadena(indice,longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice,longitud, 0, "identificador",this.valor_analizado);
                     }else if(this.texto_analizar.charAt(indice)=='w'){
                         estado = 11;
                         indice++;
-                        this.respuesta=finCadena(indice,longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice,longitud, 0, "identificador",this.valor_analizado);
                     }else if(this.texto_analizar.charAt(indice)=='r'){
                         estado = 12;
                         indice++;
-                        this.respuesta=finCadena(indice,longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice,longitud, 0,"identificador",this.valor_analizado);
                     }else if(this.texto_analizar.charAt(indice)=='e'){
                         estado = 13;
                         indice++;
-                        this.respuesta=finCadena(indice,longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice,longitud, 0,"identificador",this.valor_analizado);
                     }else if(this.texto_analizar.charAt(indice)=='f'){
                         estado = 14;
                         indice++;
-                        this.respuesta=finCadena(indice,longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice,longitud, 0,"identificador",this.valor_analizado);
                     }else if(this.texto_analizar.charAt(indice)=='v'){
                         estado = 15;
                         indice++;
-                        this.respuesta=finCadena(indice,longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice,longitud, 0,"identificador",this.valor_analizado);
                     //---------------------------------------ANALIZA IDENTIFICADOR
                     }else if(Character.isLetter(this.texto_analizar.charAt(indice))){
                         estado = 4;
                         indice++;
-                        this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                     //------------------------------------------ANALIZA OPERADOR SUMA
                     }else if(this.texto_analizar.charAt(indice)=='+'){
                         indice++;
-                        this.respuesta+="operador adicion\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(5, "opSuma","+"));
                         this.valor_analizado="";
                     //---------------------------------------ANALIZA OPERADOR RESTA
                     }else if(this.texto_analizar.charAt(indice)=='-'){    
                         indice++;
-                        this.respuesta+="operador adicion\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(5, "opSuma","-"));
                         this.valor_analizado="";
                     //---------------------------------------ANALIZA OPERADOR MULTIPLICACION
                     }else if(this.texto_analizar.charAt(indice)=='*'){
                         indice++;
-                        this.respuesta+="operador multiplicacion *\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(6, "opMul","*"));  
                         this.valor_analizado="";
                     //---------------------------------------ANALIZA OPERADOR DIVISION
                     }else if(this.texto_analizar.charAt(indice)=='/'){
                         indice++;
-                        this.respuesta+="operador multiplicacion /\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(6, "opMul","/"));  
                         this.valor_analizado="";
                     //----------------------------------------ANALIZA IGUAL
                     }else if(this.texto_analizar.charAt(indice)=='='){
                         indice++;
                         estado = 5;
-                        this.respuesta=finCadena(indice, longitud, this.respuesta, "operador asignacion\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 18,"operador asignacion","=");
                     //----------------------------------------ANALIZA MENOR QUE
                     }else if(this.texto_analizar.charAt(indice)=='<'){
                         indice++;
                         estado = 6;
-                        this.respuesta=finCadena(indice, longitud, this.respuesta, "operador relacional < \t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 7,"operador relacional","<");
                     //----------------------------------------ANALIZA MAYOR QUE
                     }else if(this.texto_analizar.charAt(indice)=='>'){
                         indice++;
                         estado = 7;
-                        this.respuesta=finCadena(indice, longitud, this.respuesta, "operador relacional > \t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 7,"operador relacional",">");
                     //----------------------------------------ANALIZA AND
                     }else if(this.texto_analizar.charAt(indice)=='&'){
                         indice++;
                         estado = 8;
-                        this.respuesta=finCadena(indice,longitud, this.respuesta, "invalido\t\t\t\t"+this.valor_analizado+"\n");
+                       finCadena(indice, longitud, -1,"invalido","&");
                     //----------------------------------------ANALIZA OR
                     }else if(this.texto_analizar.charAt(indice)=='|'){
                         estado = 9;
                         indice++;
-                        this.respuesta=finCadena(indice, longitud, this.respuesta,"invalido\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, -1,"invalido","|");
                     //----------------------------------------ANALIZA NOT
                     }else if(this.texto_analizar.charAt(indice)=='!'){
                         indice++;
-                        this.respuesta+="operador not \t\t\t\t"+this.valor_analizado+"\n";
+                        if (indice<longitud) {
+                            if (this.texto_analizar.charAt(indice)=='=') {
+                                indice++;
+                                this.respuesta.add(new token(11,"opIgualdad","!="));
+                            }else{
+                                this.respuesta.add(new token(10,"not","!"));
+                                estado=0;
+                            }
+                        }else{
+                            this.respuesta.add(new token(10,"not","!"));
+                        }
                         this.valor_analizado="";
                     //----------------------------------------ANALIZA PARENTESIS
                     }else if(this.texto_analizar.charAt(indice)=='('){
                         indice++;
-                        this.respuesta+="parentesis a\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(14,"(","("));
                         this.valor_analizado="";
                     }else if(this.texto_analizar.charAt(indice)==')'){
                         indice++;
-                        this.respuesta+="parentesis b\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(15,")",")"));
                         this.valor_analizado="";
                     }
                     //----------------------------------------ANALIZA LLAVES
                     else if(this.texto_analizar.charAt(indice)=='{'){
                         indice++;
-                        this.respuesta+="llave a\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(16,"{","{"));
                         this.valor_analizado="";
                     }else if(this.texto_analizar.charAt(indice)=='}'){
                         indice++;
-                        this.respuesta+="llave b\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(17,"}","}"));
                         this.valor_analizado="";
                     }
                     //----------------------------------------ANALIZA PUNTO Y COMA
                     else if(this.texto_analizar.charAt(indice)==';'){
                         indice++;
-                        this.respuesta+="punto y coma\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(12,";",";"));
+                        this.valor_analizado="";
+                    }
+                    //----------------------------------------ANALIZA COMA
+                    else if(this.texto_analizar.charAt(indice)==','){
+                        indice++;
+                        this.respuesta.add(new token(13,",",","));
                         this.valor_analizado="";
                     //----------------------------------------ANALIZA $
                     }else if(this.texto_analizar.charAt(indice)=='$'){
                         indice++;
-                        this.respuesta+="simbolo pesos\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(23,"$","$"));
                         this.valor_analizado="";
                     }else{
                         estado = 404;
@@ -155,12 +174,12 @@ public class analizadorLexico {
                     if (Character.isDigit(this.texto_analizar.charAt(indice))) {
                         estado=1;
                         indice++;
-                        this.respuesta = finCadena(indice, longitud, this.respuesta, "entero\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 1,"entero",this.valor_analizado);
                     }else if(this.texto_analizar.charAt(indice)=='.'){
                         if ((indice+1) == longitud) {
                             estado = 0;
                             this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length() - 1);
-                            this.respuesta+="entero\t\t\t\t"+this.valor_analizado+"\n";
+                            this.respuesta.add(new token(1,"entero",this.valor_analizado));
                             this.valor_analizado="";
                         }else{
                             estado = 3;
@@ -169,7 +188,7 @@ public class analizadorLexico {
                     }else{
                         estado = 0;
                         String temp=this.valor_analizado.substring(0, this.valor_analizado.length() - 1);
-                        this.respuesta+="entero\t\t\t\t"+temp+"\n";
+                        this.respuesta.add(new token(1,"entero",temp));
                         this.valor_analizado="";
                     }
                     break;
@@ -178,28 +197,28 @@ public class analizadorLexico {
                     if (this.texto_analizar.charAt(indice)=='"') {
                         estado=0;
                         indice++;
-                        this.respuesta +="cadena\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(3,"cadena",this.valor_analizado));
                         this.valor_analizado="";
                     }else{
                         estado=2;
                         indice++;
-                        this.respuesta = finCadena(indice, longitud, this.respuesta,"cadena\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 3,"cadena",this.valor_analizado);
                     }
                     break;
                 case 3:
                     if (Character.isDigit(this.texto_analizar.charAt(indice))) {
                         estado=3;
                         indice++;
-                        this.respuesta=finCadena(indice, longitud, this.respuesta, "real\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 2,"real",this.valor_analizado);
                     }else{
                         if(this.texto_analizar.charAt(indice-1)=='.'){
                             String temp=this.valor_analizado.substring(0, this.valor_analizado.length() - 2);
-                            this.respuesta+="entero\t\t\t\t"+temp+"\n";
+                            this.respuesta.add(new token(1,"entero",temp));
                             this.valor_analizado=this.valor_analizado.substring(temp.length(), this.valor_analizado.length() - 1);
                             indice--;
                         }else{
                              this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length() - 1);
-                            this.respuesta+="real\t\t\t\t"+this.valor_analizado+"\n";
+                            this.respuesta.add(new token(2,"real",this.valor_analizado));
                             this.valor_analizado="";
                         }
                         estado=0;
@@ -209,11 +228,11 @@ public class analizadorLexico {
                     if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
                         estado=4;
                         indice++;
-                        this.respuesta = finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         //this.valor_analizado="";
                     }else{
                         this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length() - 1);
-                        this.respuesta +="identificador\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(0,"identificador",this.valor_analizado));
                         this.valor_analizado="";
                         estado=0;
                     }
@@ -221,11 +240,11 @@ public class analizadorLexico {
                 case 5:
                     if (this.texto_analizar.charAt(indice)=='=') {
                         indice++;
-                        this.respuesta+="operador relacional ==\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(11,"opIgualdad",this.valor_analizado));
                         this.valor_analizado="";
                     }else{
                         this.valor_analizado="=";
-                        this.respuesta+="operador de asignacion =\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(18,"=",this.valor_analizado));
                         this.valor_analizado="";
                     }
                     estado = 0;
@@ -233,10 +252,10 @@ public class analizadorLexico {
                 case 6:
                     if (this.texto_analizar.charAt(indice)=='=') {     
                         indice++;
-                        this.respuesta +="operador relacional <=\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(7,"opRelac",this.valor_analizado));
                     }else{
                         this.valor_analizado="<";
-                        this.respuesta+="operador relacional <\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(7,"opRelac",this.valor_analizado));
                         
                         
                     }
@@ -246,10 +265,10 @@ public class analizadorLexico {
                 case 7:
                     if (this.texto_analizar.charAt(indice)=='=') {
                         indice++;
-                        this.respuesta +="operador relacional >=\t\t\t\t" +this.valor_analizado+"\n";
+                        this.respuesta.add(new token(7,"opRelac",this.valor_analizado));
                     }else{
                         this.valor_analizado=""+this.texto_analizar.charAt(indice-1);
-                        this.respuesta += "operador relacional >\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(7,"opRelac",this.valor_analizado));
                     }
                     this.valor_analizado="";
                     estado = 0;
@@ -257,11 +276,11 @@ public class analizadorLexico {
                 case 8:
                     if (this.texto_analizar.charAt(indice)=='&') {
                         indice++;
-                        this.respuesta+="operador and\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(9,"opAnd",this.valor_analizado));
                         this.valor_analizado="";
                     }else{
                         this.valor_analizado=""+this.texto_analizar.charAt(indice-1);
-                        this.respuesta+="invalido\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(-1,"invalido",this.valor_analizado));
                         this.valor_analizado="";
                     }
                     
@@ -270,10 +289,10 @@ public class analizadorLexico {
                 case 9:
                     if (this.texto_analizar.charAt(indice)=='|') {
                         indice++;
-                        this.respuesta+="operador or\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(8,"opOr",this.valor_analizado));
                     }else{
                         this.valor_analizado=""+this.texto_analizar.charAt(indice-1);
-                        this.respuesta+="invalido\t\t\t\t"+this.valor_analizado+"\n";
+                        this.respuesta.add(new token(-1,"invalido",this.valor_analizado));
                     }
                     this.valor_analizado="";
                     
@@ -286,12 +305,12 @@ public class analizadorLexico {
                              if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
                                 estado=4;
                             }else{
-                                this.respuesta+="palabra reservada if\t\t\t\t"+this.valor_analizado+"\n";
+                                this.respuesta.add(new token(19,"if",this.valor_analizado));
                                 this.valor_analizado="";
                                 estado = 0;
                             }
                         }else{
-                               this.respuesta+="palabra reservada if\t\t\t\t"+this.valor_analizado+"\n";
+                                this.respuesta.add(new token(19,"if",this.valor_analizado));
                                 this.valor_analizado="";
                                 estado = 0;
                         }
@@ -302,7 +321,7 @@ public class analizadorLexico {
                     }else if(this.texto_analizar.charAt(indice)=='n'){
                         indice++;
                         
-                        this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 0, "identificador",this.valor_analizado);
                         if (indice<longitud) {   
                             if (this.texto_analizar.charAt(indice)=='t') {
                                 this.valor_analizado+=this.texto_analizar.charAt(indice);
@@ -311,14 +330,14 @@ public class analizadorLexico {
                                     if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
                                         estado=4;
                                     }else{
-                                        this.respuesta+="palabra reservada int \t\t\t\t"+this.valor_analizado+"\n";
+                                        this.respuesta.add(new token(4,"tipo",this.valor_analizado));
                                         this.valor_analizado="";
                                         estado=0; 
                                     }
                                 }else{
-                                    this.respuesta+="palabra reservada int \t\t\t\t"+this.valor_analizado+"\n";
-                                        this.valor_analizado="";
-                                        estado=0;
+                                    this.respuesta.add(new token(4,"tipo",this.valor_analizado));
+                                    this.valor_analizado="";
+                                    estado=0;
 
                                 }
                                 
@@ -327,7 +346,7 @@ public class analizadorLexico {
                                 //this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                             }
                         }else{
-                            this.respuesta=finCadena(indice,longitud, this.respuesta, "identificador\t\t\t\t"+this.valor_analizado+"\n");
+                            finCadena(indice,longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
                         estado=4;
@@ -338,7 +357,7 @@ public class analizadorLexico {
                 case 11:
                     if (this.texto_analizar.charAt(indice)=='h') {
                         indice++;
-                        this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice,longitud, 0,"identificador",this.valor_analizado);
                         if (indice<longitud) {
                             if (this.texto_analizar.charAt(indice)=='i') {
                                 this.valor_analizado+=this.texto_analizar.charAt(indice);
@@ -358,14 +377,14 @@ public class analizadorLexico {
                                                         estado=4;
 
                                                     }else{
-                                                        this.respuesta +="palabra reservada while\t\t\t\t"+this.valor_analizado+"\n";
+                                                        this.respuesta.add(new token(20,"while",this.valor_analizado));
                                                         this.valor_analizado="";
                                                         estado=0;
                                                     }
                                                 }else{
-                                                    this.respuesta +="palabra reservada while\t\t\t\t"+this.valor_analizado+"\n";
-                                                        this.valor_analizado="";
-                                                        estado=0;
+                                                    this.respuesta.add(new token(20,"while",this.valor_analizado));
+                                                    this.valor_analizado="";
+                                                    estado=0;
                                                 }
                                                 
                                             }else{
@@ -375,20 +394,20 @@ public class analizadorLexico {
                                             }
                                         
                                         }else{
-                                            this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                         
                                         }
                                     }else{
                                         estado=4;
                                     }
                                 }else{
-                                    this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                    finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;
                             }
                         }else{
-                             this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                             finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
                         estado=4;
@@ -398,7 +417,7 @@ public class analizadorLexico {
                 case 12:
                     if (this.texto_analizar.charAt(indice)=='e') {
                         indice++;
-                        this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                        finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         if (indice<longitud) {
                             if (this.texto_analizar.charAt(indice)=='t') {
                                 this.valor_analizado+='t';
@@ -421,12 +440,12 @@ public class analizadorLexico {
                                                               if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
                                                                 estado =4;
                                                             }else{
-                                                                  this.respuesta +="palabra reservada return\t\t\t\t"+this.valor_analizado+"\n";
+                                                                  this.respuesta.add(new token(21,"return",this.valor_analizado));
                                                                   this.valor_analizado="";
                                                                   estado=0;
                                                             }
                                                           }else{
-                                                              this.respuesta +="palabra reservada return\t\t\t\t"+this.valor_analizado+"\n";
+                                                              this.respuesta.add(new token(21,"return",this.valor_analizado));
                                                                 this.valor_analizado="";
                                                                 estado=0;
                                                           }
@@ -437,7 +456,7 @@ public class analizadorLexico {
                                                       }
                                                 }else{
                                                     estado=4;
-                                                    this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                                    finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                                 }
                                             }else{
                                                 estado=4;
@@ -445,20 +464,20 @@ public class analizadorLexico {
                                             }
                                         
                                         }else{
-                                            this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                         
                                         }
                                     }else{
                                         estado=4;
                                     }
                                 }else{
-                                    this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                    finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;
                             }
                         }else{
-                            this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\t\t\t\t"+this.valor_analizado+"\n");
+                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
                         estado=4;
@@ -481,12 +500,12 @@ public class analizadorLexico {
                                             if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
                                                 estado=4;
                                             }else{
-                                                this.respuesta +="palabra reservada else\t\t\t\t"+this.valor_analizado+"\n";
+                                                this.respuesta.add(new token(22,"else",this.valor_analizado));
                                                 this.valor_analizado="";
                                                 estado=0;
                                             }
                                         }else{
-                                            this.respuesta +="palabra reservada else\t\t\t\t"+this.valor_analizado+"\n";
+                                           this.respuesta.add(new token(22,"else",this.valor_analizado));
                                             this.valor_analizado="";
                                             estado=0;
                                         }
@@ -495,13 +514,13 @@ public class analizadorLexico {
                                         estado=4;
                                     }
                                 }else{
-                                    this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                   finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;
                             }
                         }else{
-                            this.respuesta = finCadena(indice, longitud, this.respuesta, "indetificador\t\t\t\t"+this.valor_analizado+"\n");
+                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
                         
@@ -530,12 +549,12 @@ public class analizadorLexico {
                                                     if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
                                                         estado=4;
                                                     }else{
-                                                        this.respuesta +="palabra reservada float\t\t\t\t"+this.valor_analizado+"\n";
+                                                        this.respuesta.add(new token(4,"tipo",this.valor_analizado));
                                                         this.valor_analizado="";
                                                         estado=0;
                                                     }
                                                 }else{
-                                                    this.respuesta +="palabra reservada float\t\t\t\t"+this.valor_analizado+"\n";
+                                                    this.respuesta.add(new token(4,"tipo",this.valor_analizado));
                                                     this.valor_analizado="";
 
                                                     estado=0;
@@ -546,20 +565,20 @@ public class analizadorLexico {
                                             }
                                         
                                         }else{
-                                            this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                         
                                         }
                                     }else{
                                         estado=4;
                                     }
                                 }else{
-                                    this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                    finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;
                             }
                         }else{
-                            this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\t\t\t\t"+this.valor_analizado+"\n");
+                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
                         estado=4;
@@ -583,12 +602,12 @@ public class analizadorLexico {
                                             if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
                                                 estado=4;
                                             }else{
-                                                this.respuesta +="palabra reservada void\t\t\t\t"+this.valor_analizado+"\n";
+                                                this.respuesta.add(new token(4,"tipo",this.valor_analizado));
                                                 this.valor_analizado="";
                                                 estado=0;
                                             }
                                         }else{
-                                            this.respuesta +="palabra reservada void\t\t\t\t"+this.valor_analizado+"\n";
+                                            this.respuesta.add(new token(4,"tipo",this.valor_analizado));
                                             this.valor_analizado="";
                                             estado=0;  
                                         }
@@ -597,13 +616,13 @@ public class analizadorLexico {
                                         estado=4;
                                     }
                                 }else{
-                                    this.respuesta =finCadena(indice, longitud, this.respuesta,"identificador\t\t\t\t"+this.valor_analizado+"\n");
+                                    finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;
                             }
                         }else{
-                            this.respuesta = finCadena(indice, longitud, this.respuesta, "indetificador\t\t\t\t"+this.valor_analizado+"\n");
+                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
                         
@@ -613,7 +632,7 @@ public class analizadorLexico {
                     break;
                 case 404: 
                     estado = 0;
-                    respuesta +="invalido\t\t\t\t"+this.valor_analizado+"\n";
+                    this.respuesta.add(new token(-1,"invalido",this.valor_analizado));
                     this.valor_analizado="";
                     indice++;
                     break;
@@ -627,11 +646,10 @@ public class analizadorLexico {
         }
         return this.respuesta;
     }
-    public String finCadena(int indice, int longitud, String respuesta, String fin){
+    public void finCadena(int indice, int longitud, int numero, String simbolo, String valor){
         if (longitud == indice) {
-            this.valor_analizado="";
-            return respuesta+=fin;
+            token temp = new token(numero,simbolo,valor);
+            this.respuesta.add(temp);
         }
-            return respuesta;
     }
 }
