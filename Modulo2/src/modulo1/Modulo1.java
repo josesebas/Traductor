@@ -23,10 +23,12 @@ public class Modulo1 {
         analizadorLexico lex = new analizadorLexico(cadena);
         ArrayList<token> tokens = lex.analizar();
         int tam = tokens.size();
-        for (int i = 0; i < tam; i++) {
+        /*for (int i = 0; i < tam; i++) {
             System.out.println(tokens.get(i).numero+"\t"+tokens.get(i).simbolo);
-        }
-    
+        }*/
+        
+        sintactico sintac = new sintactico(tokens);
+        System.out.println(sintac.analizar());
     }
     
 }

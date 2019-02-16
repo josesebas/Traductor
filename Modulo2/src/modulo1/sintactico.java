@@ -5,10 +5,21 @@
  */
 package modulo1;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Eduardo
  */
 public class sintactico {
+    ArrayList<token> tokens;
+    String respuesta;
     
+    sintactico(ArrayList<token> tokens){
+        this.tokens =tokens;
+    }
+    public String analizar(){
+        return "hola";
+    }
+            
 }
