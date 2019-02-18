@@ -15,20 +15,23 @@ public class Modulo1 {
      */
     
     public static void main(String[] args) {
+        ventana traductor = new ventana();
+        traductor.setVisible(true);
+
         
-        Scanner entrada = new Scanner(System.in);
+        /*Scanner entrada = new Scanner(System.in);
         System.out.println("Ingresa el texto a analizar : ");
         String cadena = entrada.nextLine();
-        
-        analizadorLexico lex = new analizadorLexico(cadena);
+        */
+        /*analizadorLexico lex = new analizadorLexico(cadena);
         ArrayList<token> tokens = lex.analizar();
         int tam = tokens.size();
         /*for (int i = 0; i < tam; i++) {
             System.out.println(tokens.get(i).numero+"\t"+tokens.get(i).simbolo);
         }*/
         
-        sintactico sintac = new sintactico(tokens);
-        System.out.println(sintac.analizar());
+        //sintactico sintac = new sintactico(tokens);
+        //System.out.println(sintac.analizar());
     }
     
 }
