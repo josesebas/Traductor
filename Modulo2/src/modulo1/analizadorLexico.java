@@ -231,10 +231,17 @@ public class analizadorLexico {
                         finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         //this.valor_analizado="";
                     }else{
-                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length() - 1);
-                        this.respuesta.add(new token(0,"identificador",this.valor_analizado));
-                        this.valor_analizado="";
-                        estado=0;
+                        if (this.texto_analizar.charAt(indice)=='_') {
+                            estado=4;
+                            indice++;
+                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
+                        }else{
+                            this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length() - 1);
+                            this.respuesta.add(new token(0,"identificador",this.valor_analizado));
+                            this.valor_analizado="";
+                            estado=0;
+                        }
+                        
                     }
                     break;
                 case 5:

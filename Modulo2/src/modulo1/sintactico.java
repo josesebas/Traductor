@@ -94,6 +94,7 @@ public class sintactico {
                 System.out.println("");
                 
             }else{
+                continuar=false;
             
             }
             System.out.println(this.pila);
