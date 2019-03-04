@@ -10,5 +10,7 @@ package modulo1;
  * @author Eduardo
  */
 public class EP_terminal extends elementoPila{
-    
+    public EP_terminal(){
+        super();
+    }
 }

@@ -10,5 +10,12 @@ package modulo1;
  * @author Eduardo
  */
 public class EP_noTerminal extends elementoPila{
-    
+    int dato;
+    public EP_noTerminal(){
+        super();
+    }
+    /*public EP_noTerminal(){
+        super("",0);
+        //demas elementos del contructor
+    }*/
 }

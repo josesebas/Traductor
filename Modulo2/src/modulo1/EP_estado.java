@@ -10,6 +10,8 @@ package modulo1;
  * @author Eduardo
  */
 public class EP_estado extends elementoPila{
-    
+    public EP_estado(){
+        super();
+    }
     
 }

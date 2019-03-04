@@ -11,6 +11,12 @@ package modulo1;
  */
 public class elementoPila {
     String tipoElemento;
-    
-   // int 
+    int valorNum;
+    String valorCar;
+    public elementoPila(String str, int num){
+        this.valorNum = num;
+        this.valorCar = str;
+    }
+    public elementoPila(){
+    }
 }
