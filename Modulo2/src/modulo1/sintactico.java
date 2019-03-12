@@ -23,6 +23,9 @@ public class sintactico {
         {2, 0,  0,  4}, 
         {0, 0,  -2, 0}
     };
+    int[] reglas_posiciones={3, 3};
+    int[] cantidad_desapilar={3,    1};
+    
     /*
 24	1	programa
 25	0	Definiciones
@@ -174,9 +177,12 @@ public class sintactico {
  {-28,  0,  0,  0,  -28,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -28,    0,  -28,    -28,    -28,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}, 
  {-29,  0,  0,  0,  -29,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -29,    0,  -29,    -29,    -29,    -29,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}, 
  {0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -21,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}};
-    int[] reglas_posiciones={3, 3};
-    int[] cantidad_desapilar={3,    1};
-    
+    int[] posiciones_reglas = 
+        {24, 25, 25, 26, 26, 27, 28, 28, 29, 30, 30, 31, 31, 32, 33, 33, 34, 34, 35, 35, 35, 36, 36, 36, 36, 36, 37, 37, 38, 39, 39, 40, 40, 41, 41, 42, 42, 42, 42, 42, 43, 44, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45};
+    int[] cant_desapilar = 
+        {1,   0,  2,  1,  1,  4,  0,  3,  6,  0,  3,  0,  4,  3,  0,  2,  1,  1,  0,  2,  4,  6,  5,  3,  2,  0,  2,  3,  0,  1,  0,  2,  0,  3,  1,  1,  1,  1,  1,  4,  1,  1,  3,  2,  2,  3,  3,  3,  3,  3,  3,  1};
+    String[] name_reglas= 
+    {"programa", "Definiciones", "Definiciones", "Definicion", "Definicion", "DefVar", "ListaVar", "ListaVar", "DefFunc",   "Parametros", "Parametros", "ListaParam", "ListaParam", "BloqFunc", "DefLocales", "DefLocales", "DefLocal", "DefLocal", "Sentencias", "Sentencias", "Sentencia", "Sentencia", "Sentencia", "Sentencia", "Sentencia", "Otro", "Otro", "Bloque", "ValorRegresa", "ValorRegresa", "Argumentos", "Argumentos", "ListaArgumentos", "ListaArgumentos", "Termino", "Termino", "Termino", "Termino", "Termino", "LlamadaFunc", "SentenciaBloque", "SentenciaBloque", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion"};
     sintactico(ArrayList<token> tokens){
         this.tokens =tokens;
         //this.pila.push(new token(23,  "$",    "$"));

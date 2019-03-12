@@ -71,7 +71,7 @@ public class analizadorLexico {
                     //------------------------------------------ANALIZA OPERADOR SUMA
                     }else if(this.texto_analizar.charAt(indice)=='+'){
                         indice++;
-                        this.respuesta.add(new token(1, "opSuma","+"));//5
+                        this.respuesta.add(new token(5, "opSuma","+"));//5
                         this.valor_analizado="";
                     //---------------------------------------ANALIZA OPERADOR RESTA
                     }else if(this.texto_analizar.charAt(indice)=='-'){    
@@ -162,7 +162,7 @@ public class analizadorLexico {
                     //----------------------------------------ANALIZA $
                     }else if(this.texto_analizar.charAt(indice)=='$'){
                         indice++;
-                        this.respuesta.add(new token(2,"$","$"));//23
+                        this.respuesta.add(new token(23,"$","$"));//23
                         this.valor_analizado="";
                     }else{
                         estado = 404;
