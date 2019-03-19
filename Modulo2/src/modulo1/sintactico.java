@@ -16,71 +16,17 @@ public class sintactico {
     ArrayList<token> tokens;
     String respuesta="";
     ArrayList<elementoPila> pila= new ArrayList<elementoPila>();
-    int[][] tabla= {
+    ArrayList<elementoPila> arbolSintactico = new ArrayList<elementoPila>();
+    int[][] tabla1= {
         {2, 0,  0,  1}, 
         {0, 0,  -1, 0}, 
         {0, 3,  -3, 0}, 
         {2, 0,  0,  4}, 
         {0, 0,  -2, 0}
     };
-    int[] reglas_posiciones={3, 3};
-    int[] cantidad_desapilar={3,    1};
-    
-    /*
-24	1	programa
-25	0	Definiciones
-25	2	Definiciones
-26	1	Definicion
-26	1	Definicion
-27	4	DefVar
-28	0	ListaVar
-28	3	ListaVar
-29	6	DefFunc
-30	0	Parametros
-30	3	Parametros
-31	0	ListaParam
-31	4	ListaParam
-32	3	BloqFunc
-33	0	DefLocales
-33	2	DefLocales
-34	1	DefLocal
-34	1	DefLocal
-35	0	Sentencias
-35	2	Sentencias
-36	4	Sentencia
-36	6	Sentencia
-36	5	Sentencia
-36	3	Sentencia
-36	2	Sentencia
-37	0	Otro
-37	2	Otro
-38	3	Bloque
-39	0	ValorRegresa
-39	1	ValorRegresa
-40	0	Argumentos
-40	2	Argumentos
-41	0	ListaArgumentos
-41	3	ListaArgumentos
-42	1	Termino
-42	1	Termino
-42	1	Termino
-42	1	Termino
-42	1	Termino
-43	4	LlamadaFunc
-44	1	SentenciaBloque
-44	1	SentenciaBloque
-45	3	Expresion
-45	2	Expresion
-45	2	Expresion
-45	3	Expresion
-45	3	Expresion
-45	3	Expresion
-45	3	Expresion
-45	3	Expresion
-45	3	Expresion
-45	1	Expresion
-95	46
-    */
+    int[] reglas_posiciones1={3, 3};
+    int[] cantidad_desapilar1={3,    1};
+
     int [][] gramatica= 
 {{0,    0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -3, 1,  2,  3,  4,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}, 
  {0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -1, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}, 
@@ -177,9 +123,9 @@ public class sintactico {
  {-28,  0,  0,  0,  -28,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -28,    0,  -28,    -28,    -28,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}, 
  {-29,  0,  0,  0,  -29,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -29,    0,  -29,    -29,    -29,    -29,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}, 
  {0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -21,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}};
-    int[] posiciones_reglas = 
+    int[] reglas_posiciones = 
         {24, 25, 25, 26, 26, 27, 28, 28, 29, 30, 30, 31, 31, 32, 33, 33, 34, 34, 35, 35, 35, 36, 36, 36, 36, 36, 37, 37, 38, 39, 39, 40, 40, 41, 41, 42, 42, 42, 42, 42, 43, 44, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45};
-    int[] cant_desapilar = 
+    int[] cantidad_desapilar = 
         {1,   0,  2,  1,  1,  4,  0,  3,  6,  0,  3,  0,  4,  3,  0,  2,  1,  1,  0,  2,  4,  6,  5,  3,  2,  0,  2,  3,  0,  1,  0,  2,  0,  3,  1,  1,  1,  1,  1,  4,  1,  1,  3,  2,  2,  3,  3,  3,  3,  3,  3,  1};
     String[] name_reglas= 
     {"programa", "Definiciones", "Definiciones", "Definicion", "Definicion", "DefVar", "ListaVar", "ListaVar", "DefFunc",   "Parametros", "Parametros", "ListaParam", "ListaParam", "BloqFunc", "DefLocales", "DefLocales", "DefLocal", "DefLocal", "Sentencias", "Sentencias", "Sentencia", "Sentencia", "Sentencia", "Sentencia", "Sentencia", "Otro", "Otro", "Bloque", "ValorRegresa", "ValorRegresa", "Argumentos", "Argumentos", "ListaArgumentos", "ListaArgumentos", "Termino", "Termino", "Termino", "Termino", "Termino", "LlamadaFunc", "SentenciaBloque", "SentenciaBloque", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion"};
@@ -200,28 +146,26 @@ public class sintactico {
     public String analizar(){
         int fila,    columna,    accion = 0;
         int tam = this.tokens.size();
-        int cont =0;
+        int cont = 0;
+        int acum = 0;
         boolean continuar=true;
-        System.out.println("------Inicio------");
-        //System.out.println(this.pila);
-        //elementoPila temp  = new elementoPila("",0);
         while(continuar){
             elementoPila temp = this.pila.get(this.pila.size()-1);
             fila = temp.valorNum;
             
             if (cont==tam) {
-                columna=2;//donde se encuentra el fin de la entrada
+                columna=23;//donde se encuentra el fin de la entrada
             }else{
                 columna = this.tokens.get(cont).numero;
             }
-            accion=tabla[fila][columna];
+            accion=gramatica[fila][columna];
             
-            System.out.println("------Vuelta "+(cont+1)+"-------");
+            System.out.println("------Vuelta "+(acum)+"-------");
             System.out.println("fila "+fila+" columna "+columna);
             if (accion<0) {
                 System.out.println("Reduccion");
             }else if(accion>0){
-                System.out.println("Entrada: "+this.tokens.get(cont).simbolo +" -> "+this.tokens.get(cont).numero);
+                System.out.println("Entrada: "+this.tokens.get(cont).simbolo);
             }else{
                 System.out.println("Sin accion");
             }
@@ -234,22 +178,30 @@ public class sintactico {
                 if (accion==-1) {
                     System.out.println("Aceptado");
                     continuar=false;
+                    this.pila.remove(this.pila.size()-1);
+                    elementoPila guardar =new elementoPila();
+                    guardar = this.pila.get(this.pila.size()-1);
+                    this.arbolSintactico.add(guardar);
+                    this.pila.remove(this.pila.size()-1);
                 }else{
-                    //tam-=2;
-                    //cont-=2;
                     int regla = Math.abs(accion)-2;
-                    System.out.println("regla "+regla);
+                    System.out.println("regla "+(regla+1));
                     int posicion_regla = this.reglas_posiciones[regla];
-                    System.out.println("posicion regla "+posicion_regla );
+                    //System.out.println("posicion regla "+posicion_regla );
                     int cantidad_desapilar = (this.cantidad_desapilar[regla])*2;
                     System.out.println("cantidad desapilar "+cantidad_desapilar);
+                    elementoPila guardar =new elementoPila();
                     for (int desapila = 0; desapila < cantidad_desapilar; desapila++) {
                         this.pila.remove(this.pila.size()-1);
+                        guardar = this.pila.get(this.pila.size()-1);
+                        this.arbolSintactico.add(guardar);
+                        this.pila.remove(this.pila.size()-1);
+                        
+                        desapila++;
                     }
-                    int valor_regla =this.tabla[this.pila.get(this.pila.size()-1).valorNum][posicion_regla];
-                    //int valor_regla = this.tabla[Integer.parseInt(""+this.pila.get(this.pila.size()-1))][posicion_regla];
+                    int valor_regla =this.gramatica[this.pila.get(this.pila.size()-1).valorNum][posicion_regla];
                     System.out.println("valor_regla "+valor_regla);
-                    this.pila.add(new elementoPila(""+regla,regla));
+                    this.pila.add(new elementoPila(this.name_reglas[regla],regla));
                     this.pila.add(new elementoPila(""+valor_regla,valor_regla));
                 }
                 System.out.println("");
@@ -258,15 +210,20 @@ public class sintactico {
                 continuar=false;
             
             }
+            System.out.println("Pila");
             for (elementoPila item : this.pila) {
                 System.out.print(item.valorCar+", ");
             }
             System.out.println("");
+            acum++;
             
             
            
         }
-        
+        /*System.out.println("elementos del programa");
+        for (int i = this.arbolSintactico.size()-1; i > 0; i--) {
+            System.out.print(this.arbolSintactico.get(i).valorCar+",");
+        }*/
         
 
         
