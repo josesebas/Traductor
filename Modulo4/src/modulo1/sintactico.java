@@ -6,6 +6,7 @@
 package modulo1;
 
 import java.util.ArrayList;
+import modulo1.reglas.*;
 import java.util.Stack;
 
 /**
@@ -17,6 +18,8 @@ public class sintactico {
     String respuesta="";
     ArrayList<elementoPila> pila= new ArrayList<elementoPila>();
     ArrayList<elementoPila> arbolSintactico = new ArrayList<elementoPila>();
+    ArrayList<nodo> pilaNodos = new ArrayList<nodo>();
+    nodo raiz = new nodo();
     int[][] tabla1= {
         {2, 0,  0,  1}, 
         {0, 0,  -1, 0}, 
@@ -183,8 +186,11 @@ public class sintactico {
                     guardar = this.pila.get(this.pila.size()-1);
                     this.arbolSintactico.add(guardar);
                     this.pila.remove(this.pila.size()-1);
+                    preOrden(this.raiz);
                 }else{
                     int regla = Math.abs(accion)-2;
+                    //System.out.println("Crear nodo"+regla);
+                    crearNodo(regla);
                     System.out.println("regla "+(regla+1));
                     int posicion_regla = this.reglas_posiciones[regla];
                     //System.out.println("posicion regla "+posicion_regla );
@@ -220,14 +226,263 @@ public class sintactico {
             
            
         }
-        System.out.println("elementos del programa");
+        /*System.out.println("elementos del programa");
         for (int i = this.arbolSintactico.size()-1; i > 0; i--) {
             System.out.print(this.arbolSintactico.get(i).valorCar+",");
-        }
+        }*/
         
 
         
         return "";
     }
+    public void crearNodo( int regla){
+        System.out.println("regla nodos "+ regla);
+        switch(regla){
+            case 0:
+                regla1 temporal1 = new regla1();
+                this.raiz.regla= temporal1;
+                this.raiz.izq = this.pilaNodos.get(this.pilaNodos.size()-1);
+                this.raiz.der = null;
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                System.out.println("---raiz---");
+                System.out.println(this.raiz.izq.getRegla().getTipo());
+                //System.out.println(this.raiz.der.getRegla().getTipo());
+ //               System.out.println("regla del  "+this.raiz.getRegla().getTipo());
+                break;
+            case 1:
+                regla2 temporal2 = new regla2();
+                nodo temp2 = new nodo();
+                temp2.regla = temporal2;
+                temp2.izq=null;
+                temp2.der = null;
+                this.pilaNodos.add(temp2);
+                System.out.println("regla del nodo "+temp2.getRegla().getTipo());
+                break;
+            case 2:
+                regla3 temporal3 = new regla3();
+                nodo temp3 = new nodo();
+                temp3.regla = temporal3;
+                temp3.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                temp3.der =this.pilaNodos.get(this.pilaNodos.size()-1); 
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp3);
+                break;
+            case 3:
+                break;
+            case 4:
+                regla5 temporal5 = new regla5();
+                nodo temp5 = new nodo();
+                temp5.regla = temporal5;
+                temp5.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
+                temp5.der = null;
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp5);
+                break;
+            case 5:
+                regla6 temporal6  = new regla6();
+                nodo temp6 = new nodo();
+                temp6.regla = temporal6;
+                temp6.izq =this.pilaNodos.get(this.pilaNodos.size()-1);
+                temp6.der=null;
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp6);
+                break;
+            case 6:
+                regla7 temporal7  = new regla7();
+                nodo temp7 = new nodo();
+                temp7.regla = temporal7;
+                temp7.izq= null;
+                temp7.der=null;
+                this.pilaNodos.add(temp7);
+                break;
+            case 7:
+                break;
+            case 8:
+                regla9 temporal9 = new regla9();
+                nodo temp9 = new nodo();
+                temp9.regla=temporal9;
+                temp9.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
+                System.out.println("nodo 9 izq "+temp9.izq.getRegla().getTipo());
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                temp9.der = this.pilaNodos.get(this.pilaNodos.size()-1);
+                System.out.println("nodo 9 der "+temp9.der.getRegla().getTipo());
+                
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp9);
+                
+                break;
+            case 9: 
+                break;
+            case 10:
+                regla11 temporal11= new regla11();
+                nodo temp11 = new nodo();
+                temp11.regla = temporal11;
+                temp11.izq = this.pilaNodos.get(this.pilaNodos.size()-1);
+                temp11.der = null;
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp11);
+                
+                break;
+            case 11:
+                regla12 temporal12 = new regla12();
+                nodo temp12 = new nodo();
+                temp12.regla = temporal12;
+                temp12.izq = null;
+                temp12.der=null;
+                this.pilaNodos.add(temp12);
+                break;
+            case 12:
+                regla13 temporal13 = new regla13();
+                nodo temp13 = new nodo();
+                temp13.regla=temporal13;
+                temp13.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
+                temp13.der = null;
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp13);
+                break;
+            case 13:
+                regla14 temporal14 = new regla14();
+                nodo temp14 = new nodo();
+                temp14.regla=temporal14;
+                temp14.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
+                temp14.der = null;
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp14);
+                break;
+            case 14:
+                regla15 temporal15 = new regla15();
+                nodo temp15 = new nodo();
+                temp15.regla = temporal15;
+                temp15.izq = null;
+                temp15.der=null;
+                this.pilaNodos.add(temp15);
+                break;
+            case 15:
+                regla16 temporal16 = new regla16();
+                nodo temp16 = new nodo();
+                temp16.regla=temporal16;
+                temp16.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                temp16.der = this.pilaNodos.get(this.pilaNodos.size()-1);
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp16);
+                temporal16=null;
+                temp16=null;
+                
+                break;
+            case 16:
+                regla17 temporal17 = new regla17();
+                nodo temp17 = new nodo();
+                temp17.regla=temporal17;
+                temp17.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
+                temp17.der = null;
+                this.pilaNodos.remove(this.pilaNodos.size()-1);
+                this.pilaNodos.add(temp17);
+                break;
+            case 17:
+                break;
+            case 18:
+                break;
+            case 19:
+                break;
+            case 20:
+                break;
+            case 21:
+                break;
+            case 22:
+                break;
+            case 23:
+                break;
+            case 24:
+                break;
+            case 25:
+                break;
+            case 26:
+                break;
+            case 27:
+                break;
+            case 28:
+                break;
+            case 29:
+                break;
+            case 30:
+                break;
+            case 31:
+                break;
+            case 32:
+                break;
+            case 33:
+                break;
+            case 34:
+                break;
+            case 35:
+                break;
+            case 36:
+                break;
+            case 37:
+                break;
+            case 38:
+                break;
+            case 39:
+                break;
+            case 40:
+                break;
+            case 41:
+                break;
+            case 42:
+                break;
+            case 43:
+                break;
+            case 44:
+                break;
+            case 45:
+                break;
+            case 46:
+                break;
+            case 47:
+                break;
+            case 48:
+                break;
+            case 49:
+                break;
+            case 50:
+                break;
+            case 51:
+                break;
+            case 52:
+                break;
+            default:
+        }
+    }
+    
+          //Metodo Preorden
+  public static void preOrden(nodo raiz) {
+    if (raiz != null) {
+      System.out.println(raiz.getRegla().getTipo() + " - ");
+      System.out.print("izq ");preOrden(raiz.getNodoIzquierdo());
+      System.out.print("der ");preOrden(raiz.getNodoDerecho());
+    }else{
+        System.out.println("null -");
+    }
+  }
+ 
+      //Metodo Inorden
+  public static void inOrden(nodo raiz) {
+    if (raiz != null) {
+      inOrden(raiz.getNodoIzquierdo());
+      System.out.print(raiz.getRegla().getTipo()+ " - ");
+      inOrden(raiz.getNodoDerecho());
+    }
+  }
+ 
+  //Metodo PostOrden
+  public static void posOrden(nodo raiz) {
+    if (raiz != null) {
+      posOrden(raiz.getNodoIzquierdo());
+      posOrden(raiz.getNodoDerecho());
+      System.out.print(raiz.getRegla().getTipo()+ " - ");
+    }
+  }
             
 }
