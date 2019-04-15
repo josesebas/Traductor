@@ -4,13 +4,23 @@
  * and open the template in the editor.
  */
 package modulo1.reglas;
-
+import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
+import modulo1.*;
 /**
  *
  * @author Eduardo
  */
-public class regla15 extends reglas{
-    public regla15(){
-        super(15);
+public class regla15 extends nodo{
+    public regla15(ArrayList<nodo> pila, ArrayList<String> datos){
     }  
+    public void muestra(){
+        System.out.println("R15 <DefLocales> ::= \\e");
+    }
+    public DefaultMutableTreeNode muestraGrafico(){
+        DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R15 <DefLocales>");
+        DefaultMutableTreeNode vacio= new DefaultMutableTreeNode("\\e");
+        padre.add(vacio);
+        return padre;
+    }
 }

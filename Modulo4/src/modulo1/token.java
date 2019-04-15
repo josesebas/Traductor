@@ -15,8 +15,8 @@ public class token {
     String valor;
     token(int a, String b, String c){
         this.numero = a;
-        this.simbolo=b;
-        this.valor=c;
+        this.simbolo=c;
+        this.valor=b;
     }
     
 }

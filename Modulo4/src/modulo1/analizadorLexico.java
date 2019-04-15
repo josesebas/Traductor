@@ -20,14 +20,29 @@ public class analizadorLexico {
         int indice = 0;
         int estado = 0;
         //char[] cadena2 = this.texto_analizar.toCharArray();
-        
+        int validador = 0;
         while(indice<this.texto_analizar.length()){
+                
             this.valor_analizado+=this.texto_analizar.charAt(indice);
+            
             switch(estado){
                 case 0:
+                    
                     //--------------------------------------ESCAPAR LOS ESPACIOS
                     if(this.texto_analizar.charAt(indice)==' '||this.texto_analizar.charAt(indice)=='\t'||this.texto_analizar.charAt(indice)=='\n'){
                         indice++;
+                        if (this.texto_analizar.charAt(indice)==' ') {
+                            //System.out.println("espacio");
+                        }else if(this.texto_analizar.charAt(indice)=='\t'){
+                            //System.out.println("tab");
+                        }else if(this.texto_analizar.charAt(indice)=='\n'){
+                            //System.out.println("salto");
+                        }else{
+                            //System.out.println("raro : "+this.texto_analizar.charAt(indice));
+                        }
+                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
+                                                
+                        
                     //---------------------------------------ANALIZA ENTEROS
                     }else if (Character.isDigit(this.texto_analizar.charAt(indice))) {
                         estado = 1;      
@@ -349,6 +364,7 @@ public class analizadorLexico {
                                 }
                                 
                             }else{
+                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                 estado = 4;
                                 //this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                             }
@@ -357,6 +373,7 @@ public class analizadorLexico {
                         }
                     }else{
                         estado=4;
+                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                         //this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                         //this.respuesta = finCadena(indice, longitud, this.respuesta,"identificador\n");
                     }
@@ -397,6 +414,7 @@ public class analizadorLexico {
                                             }else{
                                                 //this.respuesta+="identificador\t\t\t\t"+this.valor_analizado+"\n";
                                                 //this.valor_analizado="";
+                                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                                 estado=4;
                                             }
                                         
@@ -405,18 +423,21 @@ public class analizadorLexico {
                                         
                                         }
                                     }else{
+                                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                         estado=4;
                                     }
                                 }else{
                                     finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
+                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                 estado=4;
                             }
                         }else{
                              finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
+                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                         estado=4;
                         //this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\n");
                     }
@@ -459,13 +480,15 @@ public class analizadorLexico {
                                                           
                                                        
                                                     }else{
+                                                          this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                                           estado=4;
                                                       }
                                                 }else{
-                                                    estado=4;
+                                                    //estado=4;
                                                     finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                                 }
                                             }else{
+                                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                                 estado=4;
                                                 
                                             }
@@ -475,18 +498,21 @@ public class analizadorLexico {
                                         
                                         }
                                     }else{
+                                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                         estado=4;
                                     }
                                 }else{
                                     finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
+                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                 estado=4;
                             }
                         }else{
                             finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
+                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                         estado=4;
                         //this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\n");
                     }
@@ -519,12 +545,14 @@ public class analizadorLexico {
                                         
                                     }else{
                                         estado=4;
+                                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                     }
                                 }else{
                                    finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;
+                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                             }
                         }else{
                             finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
@@ -532,6 +560,7 @@ public class analizadorLexico {
                     }else{
                         
                         estado=4;
+                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                         //this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\n");
                     }
                     break;
@@ -569,6 +598,7 @@ public class analizadorLexico {
                                                
                                             }else{
                                                 estado=4;
+                                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                             }
                                         
                                         }else{
@@ -577,18 +607,21 @@ public class analizadorLexico {
                                         }
                                     }else{
                                         estado=4;
+                                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                     }
                                 }else{
                                     finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;
+                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                             }
                         }else{
                             finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         }
                     }else{
                         estado=4;
+                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                         //this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\n");
                     }
                     break;
@@ -607,7 +640,9 @@ public class analizadorLexico {
                                         indice++;
                                         if (indice<longitud) {
                                             if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                                this.valor_analizado += this.texto_analizar.charAt(indice);
                                                 estado=4;
+                                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                             }else{
                                                 this.respuesta.add(new token(4,"tipo",this.valor_analizado));
                                                 this.valor_analizado="";
@@ -621,12 +656,14 @@ public class analizadorLexico {
                                         
                                     }else{
                                         estado=4;
+                                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                                     }
                                 }else{
                                     finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;
+                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                             }
                         }else{
                             finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
@@ -634,6 +671,7 @@ public class analizadorLexico {
                     }else{
                         
                         estado=4;
+                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                         //this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\n");
                     }
                     break;
@@ -645,7 +683,7 @@ public class analizadorLexico {
                     break;
                 default:    
             }
-            
+            validador++;
             
             
                 

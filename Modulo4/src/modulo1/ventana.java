@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package modulo1;
+import modulo1.reglas.nodo;
 import javax.swing.*;
 import java.util.*;
 import javax.swing.event.DocumentEvent;
@@ -11,6 +12,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.GroupLayout.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 /**
  *
  * @author Eduardo
@@ -20,6 +23,8 @@ public class ventana extends javax.swing.JFrame {
     /**
      * Creates new form ventana
      */
+    JFrame f;
+    nodo sintactico_terminado;
     public ventana() {
         initComponents();
     }
@@ -37,6 +42,7 @@ public class ventana extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         editor = new javax.swing.JTextArea();
+        arbolView = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,11 +72,18 @@ public class ventana extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
+
+        arbolView.setText("Ver arbol");
+        arbolView.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                arbolViewMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,28 +91,58 @@ public class ventana extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(arbolView, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(arbolView)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        analizadorLexico lex = new analizadorLexico(editor.getText());
+
+
+        //System.out.println(editor.getText().toString().toString().replaceAll("\\s", " "));
+        analizadorLexico lex = new analizadorLexico(editor.getText().toString().replaceAll("\\s"," "));
+        
         ArrayList<token> tokens = lex.analizar();
-        int tam = tokens.size();
+        //int tam = tokens.size();
         /*for (int i = 0; i < tam; i++) {
             System.out.println(tokens.get(i).numero+"\t"+tokens.get(i).simbolo);
         }*/
         sintactico sintac = new sintactico(tokens);
-        System.out.println(sintac.analizar());
+        //construccion del arbol
+        
+        sintactico_terminado = sintac.analizar();
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void arbolViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_arbolViewMouseClicked
+        // TODO add your handling code here:
+        if (sintactico_terminado!=null) {
+            f=new JFrame();
+            DefaultMutableTreeNode programa = sintactico_terminado.muestraGrafico();  
+            JTree arbol = new JTree(programa);
+
+            JScrollPane scroll = new JScrollPane(arbol);
+            f.getContentPane().add(scroll);
+            f.pack();
+            f.setVisible(true);
+            f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        }else{
+        
+        }
+        
+    }//GEN-LAST:event_arbolViewMouseClicked
 
     /**
      * @param args the command line arguments
@@ -137,6 +180,7 @@ public class ventana extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton arbolView;
     private javax.swing.JTextArea editor;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;

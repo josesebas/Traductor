@@ -17,9 +17,9 @@ public class sintactico {
     ArrayList<token> tokens;
     String respuesta="";
     ArrayList<elementoPila> pila= new ArrayList<elementoPila>();
-    ArrayList<elementoPila> arbolSintactico = new ArrayList<elementoPila>();
-    ArrayList<nodo> pilaNodos = new ArrayList<nodo>();
-    nodo raiz = new nodo();
+    ArrayList<String> valoresArbol = new ArrayList<String>();
+    ArrayList<nodo> nodosArbol = new ArrayList<nodo>();
+    nodo programa = new nodo();
     int[][] tabla1= {
         {2, 0,  0,  1}, 
         {0, 0,  -1, 0}, 
@@ -127,34 +127,29 @@ public class sintactico {
  {-29,  0,  0,  0,  -29,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -29,    0,  -29,    -29,    -29,    -29,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}, 
  {0,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  -21,    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}};
     int[] reglas_posiciones = 
-        {24, 25, 25, 26, 26, 27, 28, 28, 29, 30, 30, 31, 31, 32, 33, 33, 34, 34, 35, 35, 35, 36, 36, 36, 36, 36, 37, 37, 38, 39, 39, 40, 40, 41, 41, 42, 42, 42, 42, 42, 43, 44, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45};
+    {24, 25, 25, 26, 26, 27, 28, 28, 29, 30, 30, 31, 31, 32, 33, 33, 34, 34, 35, 35, 36, 36, 36, 36, 36, 37, 37, 38, 39, 39, 40, 40, 41, 41, 42, 42, 42, 42, 42, 43, 44, 44, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45};	
     int[] cantidad_desapilar = 
         {1,   0,  2,  1,  1,  4,  0,  3,  6,  0,  3,  0,  4,  3,  0,  2,  1,  1,  0,  2,  4,  6,  5,  3,  2,  0,  2,  3,  0,  1,  0,  2,  0,  3,  1,  1,  1,  1,  1,  4,  1,  1,  3,  2,  2,  3,  3,  3,  3,  3,  3,  1};
     String[] name_reglas= 
     {"programa", "Definiciones", "Definiciones", "Definicion", "Definicion", "DefVar", "ListaVar", "ListaVar", "DefFunc",   "Parametros", "Parametros", "ListaParam", "ListaParam", "BloqFunc", "DefLocales", "DefLocales", "DefLocal", "DefLocal", "Sentencias", "Sentencias", "Sentencia", "Sentencia", "Sentencia", "Sentencia", "Sentencia", "Otro", "Otro", "Bloque", "ValorRegresa", "ValorRegresa", "Argumentos", "Argumentos", "ListaArgumentos", "ListaArgumentos", "Termino", "Termino", "Termino", "Termino", "Termino", "LlamadaFunc", "SentenciaBloque", "SentenciaBloque", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion", "Expresion"};
+    // inicializacion del sintactico
     sintactico(ArrayList<token> tokens){
         this.tokens =tokens;
         //this.pila.push(new token(23,  "$",    "$"));
         this.pila.add(new elementoPila("$",2));
         this.pila.add(new elementoPila("0",0));
-        
-        /*this.pila.push(1);
-        this.pila.push("gola");
-        this.pila.push(tokens.get(0).simbolo);
-        while(!pila.empty()){
-            System.out.println(pila.pop());
-        }*/
-        //System.out.println(this.pila.size());
+
     }
-    public String analizar(){
+    public nodo analizar(){
         int fila,    columna,    accion = 0;
         int tam = this.tokens.size();
         int cont = 0;
         int acum = 0;
         boolean continuar=true;
         while(continuar){
-            elementoPila temp = this.pila.get(this.pila.size()-1);
-            fila = temp.valorNum;
+            elementoPila temp = new elementoPila();
+            temp =  this.pila.get(this.pila.size()-1);
+            fila = temp.codigo;
             
             if (cont==tam) {
                 columna=23;//donde se encuentra el fin de la entrada
@@ -165,6 +160,7 @@ public class sintactico {
             
             System.out.println("------Vuelta "+(acum)+"-------");
             System.out.println("fila "+fila+" columna "+columna);
+            //------------------------------------------------------------------ evalua acciones
             if (accion<0) {
                 System.out.println("Reduccion");
             }else if(accion>0){
@@ -172,41 +168,47 @@ public class sintactico {
             }else{
                 System.out.println("Sin accion");
             }
-            System.out.println("accion: "+accion);
+            //System.out.println("accion: "+accion);
+            //------------------------------------------------------------------ desplazamientos
             if (accion>0) {
                 this.pila.add(new elementoPila(this.tokens.get(cont).simbolo,this.tokens.get(cont).numero));
                 this.pila.add(new elementoPila("d"+accion,accion));
                 cont++;
+            //------------------------------------------------------------------ reducciones
             }else if(accion<0){
+                // estado de aceptacion
                 if (accion==-1) {
                     System.out.println("Aceptado");
                     continuar=false;
                     this.pila.remove(this.pila.size()-1);
-                    elementoPila guardar =new elementoPila();
-                    guardar = this.pila.get(this.pila.size()-1);
-                    this.arbolSintactico.add(guardar);
                     this.pila.remove(this.pila.size()-1);
-                    preOrden(this.raiz);
+                    
+                // todas las demas reglas
                 }else{
+                    // obtener numero de regla
                     int regla = Math.abs(accion)-2;
-                    //System.out.println("Crear nodo"+regla);
-                    crearNodo(regla);
                     System.out.println("regla "+(regla+1));
+                    // obtener posicion de la regla
                     int posicion_regla = this.reglas_posiciones[regla];
-                    //System.out.println("posicion regla "+posicion_regla );
+                    
+                    System.out.println("posicion regla "+posicion_regla );
+                    // obtener cantidad a desapilar
                     int cantidad_desapilar = (this.cantidad_desapilar[regla])*2;
                     System.out.println("cantidad desapilar "+cantidad_desapilar);
-                    elementoPila guardar =new elementoPila();
+                    
                     for (int desapila = 0; desapila < cantidad_desapilar; desapila++) {
                         this.pila.remove(this.pila.size()-1);
-                        guardar = this.pila.get(this.pila.size()-1);
-                        this.arbolSintactico.add(guardar);
+                        this.valoresArbol.add(this.pila.get(this.pila.size()-1).getValor());
                         this.pila.remove(this.pila.size()-1);
-                        
                         desapila++;
                     }
-                    int valor_regla =this.gramatica[this.pila.get(this.pila.size()-1).valorNum][posicion_regla];
-                    System.out.println("valor_regla "+valor_regla);
+                    
+                    
+                    int valor_regla = this.gramatica[this.pila.get(this.pila.size()-1).codigo][posicion_regla];
+                    System.out.println("x:"+this.pila.get(this.pila.size()-1).codigo+" y:"+posicion_regla);
+                    System.out.println("Valor casilla: "+valor_regla);
+                    crearNodo(regla);
+                    
                     this.pila.add(new elementoPila(this.name_reglas[regla],regla));
                     this.pila.add(new elementoPila(""+valor_regla,valor_regla));
                 }
@@ -218,271 +220,351 @@ public class sintactico {
             }
             System.out.println("Pila");
             for (elementoPila item : this.pila) {
-                System.out.print(item.valorCar+", ");
+                System.out.print(item.valor+", ");
             }
             System.out.println("");
-            acum++;
+            
+                    acum++;
             
             
            
         }
-        /*System.out.println("elementos del programa");
-        for (int i = this.arbolSintactico.size()-1; i > 0; i--) {
-            System.out.print(this.arbolSintactico.get(i).valorCar+",");
-        }*/
+        if (this.programa!=null) {
+            this.programa.muestra();
+        }
         
 
         
-        return "";
+        return programa;
     }
-    public void crearNodo( int regla){
-        System.out.println("regla nodos "+ regla);
-        switch(regla){
+    public void crearNodo( int regla_num){
+        System.out.println("regla nodos "+ regla_num);
+        int valor = 0;
+        switch(regla_num){
             case 0:
-                regla1 temporal1 = new regla1();
-                this.raiz.regla= temporal1;
-                this.raiz.izq = this.pilaNodos.get(this.pilaNodos.size()-1);
-                this.raiz.der = null;
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                System.out.println("---raiz---");
-                System.out.println(this.raiz.izq.getRegla().getTipo());
-                //System.out.println(this.raiz.der.getRegla().getTipo());
- //               System.out.println("regla del  "+this.raiz.getRegla().getTipo());
+                //creacion de regla
+                regla1 temporal1 = new regla1(this.nodosArbol, this.valoresArbol);
+                //apilamos regla a pila
+                //this.nodosArbol.add(temporal1);
+                //referencia a inicio de arbol
+                this.programa= temporal1;
+                /*System.out.println("---raiz---");
+                System.out.println(this.raiz);*/
                 break;
             case 1:
-                regla2 temporal2 = new regla2();
-                nodo temp2 = new nodo();
-                temp2.regla = temporal2;
-                temp2.izq=null;
-                temp2.der = null;
-                this.pilaNodos.add(temp2);
-                System.out.println("regla del nodo "+temp2.getRegla().getTipo());
+                //creacion y apilacion regla vacia
+                regla2 temporal2 = new regla2(this.nodosArbol, this.valoresArbol);
+                //apilamos regla a pila
+                this.nodosArbol.add(temporal2);
                 break;
             case 2:
-                regla3 temporal3 = new regla3();
-                nodo temp3 = new nodo();
-                temp3.regla = temporal3;
-                temp3.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                temp3.der =this.pilaNodos.get(this.pilaNodos.size()-1); 
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp3);
+                //creacion regla
+                regla3 temporal3 = new regla3(this.nodosArbol, this.valoresArbol);
+                //apilamos regla a pila
+                this.nodosArbol.add(temporal3);
                 break;
             case 3:
+                //creacion de regla
+                regla4 temporal4 = new regla4(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal4);
                 break;
             case 4:
-                regla5 temporal5 = new regla5();
-                nodo temp5 = new nodo();
-                temp5.regla = temporal5;
-                temp5.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
-                temp5.der = null;
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp5);
+                //creacion de regla
+                regla5 temporal5 = new regla5(this.nodosArbol, this.valoresArbol);
+                //apilamos regla a pila
+                this.nodosArbol.add(temporal5);
                 break;
             case 5:
-                regla6 temporal6  = new regla6();
-                nodo temp6 = new nodo();
-                temp6.regla = temporal6;
-                temp6.izq =this.pilaNodos.get(this.pilaNodos.size()-1);
-                temp6.der=null;
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp6);
+                //creacion de regla
+                regla6 temporal6  = new regla6(this.nodosArbol, this.valoresArbol);
+                 //apilamos regla a pila
+                this.nodosArbol.add(temporal6);
                 break;
             case 6:
-                regla7 temporal7  = new regla7();
-                nodo temp7 = new nodo();
-                temp7.regla = temporal7;
-                temp7.izq= null;
-                temp7.der=null;
-                this.pilaNodos.add(temp7);
+                //creacion y apilacion de regla vacia
+                regla7 temporal7  = new regla7(this.nodosArbol, this.valoresArbol);
+                //apilamos regla a pila
+                this.nodosArbol.add(temporal7);
                 break;
             case 7:
+                //creacion de regla
+                regla8 temporal8 = new regla8(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal8);
                 break;
             case 8:
-                regla9 temporal9 = new regla9();
-                nodo temp9 = new nodo();
-                temp9.regla=temporal9;
-                temp9.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
-                System.out.println("nodo 9 izq "+temp9.izq.getRegla().getTipo());
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                temp9.der = this.pilaNodos.get(this.pilaNodos.size()-1);
-                System.out.println("nodo 9 der "+temp9.der.getRegla().getTipo());
-                
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp9);
+                //creacion de regla
+                regla9 temporal9 = new regla9(this.nodosArbol, this.valoresArbol);
+                 //apilamos regla a pila
+                this.nodosArbol.add(temporal9);
                 
                 break;
             case 9: 
+                //creacion de regla
+                regla10 temporal10 = new regla10(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal10);
                 break;
             case 10:
-                regla11 temporal11= new regla11();
-                nodo temp11 = new nodo();
-                temp11.regla = temporal11;
-                temp11.izq = this.pilaNodos.get(this.pilaNodos.size()-1);
-                temp11.der = null;
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp11);
+                //creacion de regla
+                regla11 temporal11= new regla11(this.nodosArbol, this.valoresArbol);
+                 //apilamos regla a pila
+                this.nodosArbol.add(temporal11);
                 
                 break;
             case 11:
-                regla12 temporal12 = new regla12();
-                nodo temp12 = new nodo();
-                temp12.regla = temporal12;
-                temp12.izq = null;
-                temp12.der=null;
-                this.pilaNodos.add(temp12);
+                //creacion de regla y apilamos vacia
+                regla12 temporal12 = new regla12(this.nodosArbol, this.valoresArbol);
+                //apilamos regla a pila
+                this.nodosArbol.add(temporal12);
                 break;
             case 12:
-                regla13 temporal13 = new regla13();
-                nodo temp13 = new nodo();
-                temp13.regla=temporal13;
-                temp13.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
-                temp13.der = null;
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp13);
+                //creacion de regla
+                regla13 temporal13 = new regla13(this.nodosArbol, this.valoresArbol);
+                //apilamos regla a pila
+                this.nodosArbol.add(temporal13);
                 break;
             case 13:
-                regla14 temporal14 = new regla14();
-                nodo temp14 = new nodo();
-                temp14.regla=temporal14;
-                temp14.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
-                temp14.der = null;
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp14);
+                //creacion de regla
+                regla14 temporal14 = new regla14(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal14);
                 break;
             case 14:
-                regla15 temporal15 = new regla15();
-                nodo temp15 = new nodo();
-                temp15.regla = temporal15;
-                temp15.izq = null;
-                temp15.der=null;
-                this.pilaNodos.add(temp15);
+                //creacion de regla y apilamos regla vacia
+                regla15 temporal15 = new regla15(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal15);
                 break;
             case 15:
-                regla16 temporal16 = new regla16();
-                nodo temp16 = new nodo();
-                temp16.regla=temporal16;
-                temp16.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                temp16.der = this.pilaNodos.get(this.pilaNodos.size()-1);
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp16);
-                temporal16=null;
-                temp16=null;
+                //creacion de regla
+                regla16 temporal16 = new regla16(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal16);
                 
                 break;
             case 16:
-                regla17 temporal17 = new regla17();
-                nodo temp17 = new nodo();
-                temp17.regla=temporal17;
-                temp17.izq=this.pilaNodos.get(this.pilaNodos.size()-1);
-                temp17.der = null;
-                this.pilaNodos.remove(this.pilaNodos.size()-1);
-                this.pilaNodos.add(temp17);
+                regla17 temporal17 = new regla17(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal17);
                 break;
             case 17:
+                //creacion de regla
+                regla18 temporal18 = new regla18(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal18);
                 break;
             case 18:
+                //creacion de regla
+                regla19 temporal19 = new regla19(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal19);
                 break;
             case 19:
+                //creacion de regla
+                regla20 temporal20 = new regla20(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal20);
                 break;
             case 20:
+                //creacion de regla
+                regla21 temporal21 = new regla21(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal21);
                 break;
             case 21:
+                //creacion de regla
+                regla22 temporal22 = new regla22(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal22);
                 break;
             case 22:
+                //creacion de regla
+                regla23 temporal23 = new regla23(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal23);
                 break;
             case 23:
+                //creacion de regla
+                regla24 temporal24 = new regla24(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal24);
                 break;
             case 24:
+                //creacion de regla
+                regla25 temporal25 = new regla25(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal25);
                 break;
             case 25:
+                //creacion de regla
+                regla26 temporal26 = new regla26(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal26);
                 break;
             case 26:
+                //creacion de regla
+                regla27 temporal27 = new regla27(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal27);
                 break;
             case 27:
+                //creacion de regla
+                regla28 temporal28 = new regla28(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal28);
                 break;
             case 28:
+                //creacion de regla
+                regla29 temporal29 = new regla29(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal29);
                 break;
             case 29:
+                //creacion de regla
+                regla30 temporal30 = new regla30(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal30);
                 break;
             case 30:
+                //creacion de regla
+                regla31 temporal31 = new regla31(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal31);
                 break;
             case 31:
+                //creacion de regla
+                regla32 temporal32 = new regla32(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal32);
                 break;
             case 32:
+                //creacion de regla
+                regla33 temporal33 = new regla33(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal33);
                 break;
             case 33:
+                //creacion de regla
+                regla34 temporal34 = new regla34(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal34);
                 break;
             case 34:
+                //creacion de regla
+                regla35 temporal35 = new regla35(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal35);
                 break;
             case 35:
+                //creacion de regla
+                regla36 temporal36 = new regla36(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal36);
                 break;
             case 36:
+                //creacion de regla
+                regla37 temporal37 = new regla37(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal37);
                 break;
             case 37:
+                //creacion de regla
+                regla38 temporal38 = new regla38(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal38);
                 break;
             case 38:
+                //creacion de regla
+                regla39 temporal39 = new regla39(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal39);
                 break;
             case 39:
+                //creacion de regla
+                regla40 temporal40 = new regla40(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal40);
                 break;
             case 40:
+                //creacion de regla
+                regla41 temporal41 = new regla41(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal41);
                 break;
             case 41:
+                //creacion de regla
+                regla42 temporal42 = new regla42(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal42);
                 break;
             case 42:
+                //creacion de regla
+                regla43 temporal43 = new regla43(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal43);
                 break;
             case 43:
+                //creacion de regla
+                regla44 temporal44 = new regla44(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal44);
                 break;
             case 44:
+                //creacion de regla
+                regla45 temporal45 = new regla45(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal45);
                 break;
             case 45:
+                //creacion de regla
+                regla46 temporal46 = new regla46(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal46);
                 break;
             case 46:
+                //creacion de regla
+                regla47 temporal47 = new regla47(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal47);
                 break;
             case 47:
+                //creacion de regla
+                regla48 temporal48 = new regla48(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal48);
                 break;
             case 48:
+                //creacion de regla
+                regla49 temporal49 = new regla49(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal49);
                 break;
             case 49:
+                //creacion de regla
+                regla50 temporal50 = new regla50(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal50);
                 break;
             case 50:
+                //creacion de regla
+                regla51 temporal51 = new regla51(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal51);
                 break;
             case 51:
-                break;
-            case 52:
+                //creacion de regla
+                regla52 temporal52 = new regla52(this.nodosArbol, this.valoresArbol);
+                //apilamos regla
+                this.nodosArbol.add(temporal52);
                 break;
             default:
         }
-    }
-    
-          //Metodo Preorden
-  public static void preOrden(nodo raiz) {
-    if (raiz != null) {
-      System.out.println(raiz.getRegla().getTipo() + " - ");
-      System.out.print("izq ");preOrden(raiz.getNodoIzquierdo());
-      System.out.print("der ");preOrden(raiz.getNodoDerecho());
-    }else{
-        System.out.println("null -");
-    }
-  }
- 
-      //Metodo Inorden
-  public static void inOrden(nodo raiz) {
-    if (raiz != null) {
-      inOrden(raiz.getNodoIzquierdo());
-      System.out.print(raiz.getRegla().getTipo()+ " - ");
-      inOrden(raiz.getNodoDerecho());
-    }
-  }
- 
-  //Metodo PostOrden
-  public static void posOrden(nodo raiz) {
-    if (raiz != null) {
-      posOrden(raiz.getNodoIzquierdo());
-      posOrden(raiz.getNodoDerecho());
-      System.out.print(raiz.getRegla().getTipo()+ " - ");
-    }
-  }
-            
+        
+        for (int i = 0; i <this.nodosArbol.size(); i++) {
+            this.nodosArbol.get(i).muestra();
+            System.out.println("------------------------------NODOS-----------------");
+        }
+    }            
 }

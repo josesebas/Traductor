@@ -4,13 +4,31 @@
  * and open the template in the editor.
  */
 package modulo1.reglas;
-
+import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
+import modulo1.*;
 /**
  *
  * @author Eduardo
  */
-public class regla14 extends reglas{
-    public regla14(){
-        super(14);
+public class regla14 extends nodo{
+    nodo defLocales;
+    public regla14(ArrayList<nodo> pila, ArrayList<String> datos){
+        datos.remove(datos.size()-1);//desapilamos {
+        
+        this.defLocales  = pila.get(pila.size()-1);
+        pila.remove(pila.size()-1);//desapilamos defLocales
+        
+        datos.remove(datos.size()-1);//desapilamos  y }
     }  
+    public void muestra(){
+        System.out.println("R14 <BloqFunc> ::= { <DefLocales> }");
+        this.defLocales.muestra();
+    }
+    public DefaultMutableTreeNode muestraGrafico(){
+        DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R14 <BloqFun>");
+        DefaultMutableTreeNode nodoDefL=this.defLocales.muestraGrafico();
+        padre.add(nodoDefL);
+        return padre;
+    }
 }
