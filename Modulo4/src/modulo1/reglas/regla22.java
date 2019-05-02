@@ -34,10 +34,14 @@ public class regla22 extends nodo{
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R22 <Sentencia>");
         DefaultMutableTreeNode nodoExp= this.expresion.muestraGrafico();
+        //DefaultMutableTreeNode nodoParI=new DefaultMutableTreeNode(" ) ");
         DefaultMutableTreeNode nodoSent=this.sentenciaBloque.muestraGrafico();
+        //DefaultMutableTreeNode nodoParD=new DefaultMutableTreeNode(" ) ");
         DefaultMutableTreeNode nodoOtro  = this.otro.muestraGrafico();
         padre.add(nodoExp);
+        //padre.add(nodoParI);
         padre.add(nodoSent);
+        //padre.add(nodoParD);
         padre.add(nodoOtro);
         return padre;
     }

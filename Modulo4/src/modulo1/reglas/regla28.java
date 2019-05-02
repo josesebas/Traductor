@@ -25,8 +25,12 @@ public class regla28  extends nodo{
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R28 <Bloque>");
+        //DefaultMutableTreeNode nodoLlaI=new DefaultMutableTreeNode(" { ");
         DefaultMutableTreeNode nodoSen =  this.sentencias.muestraGrafico();
+        //DefaultMutableTreeNode nodoLlaD=new DefaultMutableTreeNode(" } ");
+        //padre.add(nodoLlaI);
         padre.add(nodoSen);
+        //padre.add(nodoLlaD);
         return padre;
     }
 }

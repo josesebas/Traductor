@@ -25,7 +25,9 @@ public class regla24 extends nodo{
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R24 <Sentencia>");
+        DefaultMutableTreeNode nodoReturn=new DefaultMutableTreeNode(" return ");
         DefaultMutableTreeNode nodoValor= this.valorRegresa.muestraGrafico();
+        padre.add(nodoReturn);
         padre.add(nodoValor);
         return padre;
     }

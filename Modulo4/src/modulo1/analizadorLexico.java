@@ -58,6 +58,10 @@ public class analizadorLexico {
                         estado = 10;
                         indice++;
                         finCadena(indice,longitud, 0, "identificador",this.valor_analizado);
+                    }else if(this.texto_analizar.charAt(indice)=='s'){
+                        estado = 16;
+                        indice ++;
+                        finCadena(indice, longitud, 0, "identificador", this.valor_analizado);
                     }else if(this.texto_analizar.charAt(indice)=='w'){
                         estado = 11;
                         indice++;
@@ -660,6 +664,83 @@ public class analizadorLexico {
                                     }
                                 }else{
                                     finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
+                                }
+                            }else{
+                                estado=4;
+                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
+                            }
+                        }else{
+                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
+                        }
+                    }else{
+                        
+                        estado=4;
+                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
+                        //this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\n");
+                    }
+                    break;
+                case 16:
+                    if (this.texto_analizar.charAt(indice)=='t') {
+                        indice++;
+                        if (indice<longitud) {
+                            if (this.texto_analizar.charAt(indice)=='r') {
+                                this.valor_analizado+=this.texto_analizar.charAt(indice);
+                                indice++;
+                                if (indice<longitud) {
+                                    if (this.texto_analizar.charAt(indice)=='i') {
+                                        this.valor_analizado+=this.texto_analizar.charAt(indice);
+                                        indice++;
+                                        if (indice<longitud) {
+                                            if (this.texto_analizar.charAt(indice)=='n') {
+                                                this.valor_analizado+=this.texto_analizar.charAt(indice);
+                                                indice++;
+                                                if(indice<longitud){
+                                                    if (this.texto_analizar.charAt(indice)=='g') {
+                                                        this.valor_analizado+=this.texto_analizar.charAt(indice);
+                                                        indice++;
+                                                        if (indice<longitud) {
+                                                            if (this.texto_analizar.charAt(indice)==' ') {
+                                                                this.respuesta.add(new token(4,"tipo",this.valor_analizado));
+                                                                this.valor_analizado="";
+                                                                estado=0;
+                                                            }else{
+                                                                if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
+                                                                    estado = 4;
+                                                                    this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
+
+                                                                }else{
+                                                                    this.respuesta.add(new token(4,"tipo",this.valor_analizado));
+                                                                    this.valor_analizado="";
+                                                                    estado=0;
+                                                                }
+                                                            }
+                                                        }else{
+                                                            finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
+                                                        }
+                                                    }else{
+                                                        estado=4;
+                                                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
+
+                                                    }
+                                                }else{
+                                                    finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
+                                                }
+                                            }else{
+                                                estado=4;
+                                                this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
+
+                                            }
+                                        }else{
+                                            
+                                             finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
+                                        }
+                                        
+                                    }else{
+                                        estado=4;
+                                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
+                                    }
+                                }else{
+                                   finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                                 }
                             }else{
                                 estado=4;

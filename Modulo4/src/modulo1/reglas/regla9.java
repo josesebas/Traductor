@@ -42,12 +42,16 @@ public class regla9 extends nodo{
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R9 <DefFun>");
         DefaultMutableTreeNode nodoTip=new DefaultMutableTreeNode("Tipo "+this.tipo);
-        DefaultMutableTreeNode nodoIde = new DefaultMutableTreeNode("Tipo "+this.identificador);
+        DefaultMutableTreeNode nodoIde = new DefaultMutableTreeNode("Identificador "+this.identificador);
+        DefaultMutableTreeNode nodoParI = new DefaultMutableTreeNode(" ( ");
         DefaultMutableTreeNode nodoParam = this.parametros.muestraGrafico();
+        DefaultMutableTreeNode nodoParD = new DefaultMutableTreeNode(" ) ");
         DefaultMutableTreeNode nodoBloq = this.bloqFunc.muestraGrafico();
         padre.add(nodoTip);
         padre.add(nodoIde);
+        padre.add(nodoParI);
         padre.add(nodoParam);
+        padre.add(nodoParD);
         padre.add(nodoBloq);
         
         return padre;

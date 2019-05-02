@@ -33,9 +33,13 @@ public class regla40 extends nodo {
      public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R40 <LlamadaFunc>");
         DefaultMutableTreeNode nodoIde = new DefaultMutableTreeNode("Identificador "+this.identificador);
+        //DefaultMutableTreeNode nodoParI=new DefaultMutableTreeNode(" ( ");
         DefaultMutableTreeNode nodoArg= this.argumentos.muestraGrafico();
+        //DefaultMutableTreeNode nodoParD=new DefaultMutableTreeNode(" ) ");
         padre.add(nodoIde);
+        //padre.add(nodoParI);
         padre.add(nodoArg);
+        //padre.add(nodoParD);
         return padre;
     }  
    

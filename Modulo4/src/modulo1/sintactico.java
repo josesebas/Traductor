@@ -195,7 +195,7 @@ public class sintactico {
                     // obtener cantidad a desapilar
                     int cantidad_desapilar = (this.cantidad_desapilar[regla])*2;
                     System.out.println("cantidad desapilar "+cantidad_desapilar);
-                    
+                    this.valoresArbol.clear();
                     for (int desapila = 0; desapila < cantidad_desapilar; desapila++) {
                         this.pila.remove(this.pila.size()-1);
                         this.valoresArbol.add(this.pila.get(this.pila.size()-1).getValor());
@@ -238,6 +238,7 @@ public class sintactico {
         return programa;
     }
     public void crearNodo( int regla_num){
+        System.out.println("pila de datos "+this.valoresArbol);
         System.out.println("regla nodos "+ regla_num);
         int valor = 0;
         switch(regla_num){
@@ -562,9 +563,9 @@ public class sintactico {
             default:
         }
         
-        for (int i = 0; i <this.nodosArbol.size(); i++) {
+        /*for (int i = 0; i <this.nodosArbol.size(); i++) {
             this.nodosArbol.get(i).muestra();
             System.out.println("------------------------------NODOS-----------------");
-        }
+        }*/
     }            
 }

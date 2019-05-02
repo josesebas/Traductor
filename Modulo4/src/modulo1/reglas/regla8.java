@@ -27,8 +27,10 @@ public class regla8 extends nodo{
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R8 <Definiciones>");
+        DefaultMutableTreeNode nodoComa=new DefaultMutableTreeNode(" , ");
         DefaultMutableTreeNode nodoIde=new DefaultMutableTreeNode("Identificador "+this.identificador);
         DefaultMutableTreeNode nodoList = this.listaVar.muestraGrafico();
+        padre.add(nodoComa);
         padre.add(nodoIde);
         padre.add(nodoList);
         return padre;

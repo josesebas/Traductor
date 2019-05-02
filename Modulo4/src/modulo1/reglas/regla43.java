@@ -27,8 +27,12 @@ public class regla43 extends nodo{
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R43 <Expresion>");
+        //DefaultMutableTreeNode nodoParI=new DefaultMutableTreeNode(" ( ");
         DefaultMutableTreeNode nodoExp= this.expresion.muestraGrafico();
+        //DefaultMutableTreeNode nodoParD=new DefaultMutableTreeNode(" ) ");
+        //padre.add(nodoParI);
         padre.add(nodoExp);
+        //padre.add(nodoParD);
         return padre;
     }
 }

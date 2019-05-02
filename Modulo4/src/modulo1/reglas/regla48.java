@@ -15,11 +15,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class regla48 extends nodo{
     nodo expresion1;
     nodo expresion2;
+    String opRel;
     public regla48 (ArrayList<nodo> pila, ArrayList<String> datos){
         this.expresion1 = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
         
-        datos.remove(datos.size()-1);//desapila op relac
+        datos.remove(datos.size()-1);
+        this.opRel = datos.remove(datos.size()-1);//desapila op relac
 
         this.expresion2 =pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
@@ -32,8 +34,10 @@ public class regla48 extends nodo{
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R48 <Expresion>");
         DefaultMutableTreeNode nodoExp1= this.expresion1.muestraGrafico();
+         DefaultMutableTreeNode nodoOp=new DefaultMutableTreeNode(" opRel "+ this.opRel);
         DefaultMutableTreeNode nodoExp2= this.expresion2.muestraGrafico();
         padre.add(nodoExp1);
+        padre.add(nodoOp);
         padre.add(nodoExp2);
         return padre;
     }

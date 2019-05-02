@@ -35,9 +35,11 @@ public class regla13 extends nodo {
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R13 <ListaPAram>");
+        DefaultMutableTreeNode nodoComa=new DefaultMutableTreeNode(" , ");
         DefaultMutableTreeNode nodoTipo=new DefaultMutableTreeNode("Tipo: "+this.tipo);
         DefaultMutableTreeNode nodoIden= new DefaultMutableTreeNode("Identificador: "+this.identificador);
         DefaultMutableTreeNode nodoList = this.listaParam.muestraGrafico();
+        padre.add(nodoComa);
         padre.add(nodoTipo);
         padre.add(nodoIden);
         padre.add(nodoList);

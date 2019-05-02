@@ -30,8 +30,10 @@ public class regla34 extends nodo{
 
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R34 <ListaArgumentos>");
+        DefaultMutableTreeNode nodoComa=new DefaultMutableTreeNode(" , ");
         DefaultMutableTreeNode nodoExp= this.expresion.muestraGrafico();
         DefaultMutableTreeNode nodoList=this.listaArgumentos.muestraGrafico();
+        padre.add(nodoComa);
         padre.add(nodoExp);
         padre.add(nodoList);
         return padre;

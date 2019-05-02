@@ -31,9 +31,15 @@ public class regla23 extends nodo{
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R23 <Sentencia>");
+        DefaultMutableTreeNode nodoWhile=new DefaultMutableTreeNode(" while");
+        //DefaultMutableTreeNode nodoParI=new DefaultMutableTreeNode(" ( ");
         DefaultMutableTreeNode nodoExp= this.expresion.muestraGrafico();
+        //DefaultMutableTreeNode nodoParD=new DefaultMutableTreeNode(" ) ");
         DefaultMutableTreeNode nodoBloq=this.bloque.muestraGrafico();
+        padre.add(nodoWhile);
+        //padre.add(nodoParI);
         padre.add(nodoExp);
+        //padre.add(nodoParD);
         padre.add(nodoBloq);
         return padre;
     }

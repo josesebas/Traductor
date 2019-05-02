@@ -27,8 +27,12 @@ public class regla14 extends nodo{
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R14 <BloqFun>");
+        //DefaultMutableTreeNode nodoLlaI=new DefaultMutableTreeNode(" { ");
         DefaultMutableTreeNode nodoDefL=this.defLocales.muestraGrafico();
+        //DefaultMutableTreeNode nodoLlaD=new DefaultMutableTreeNode(" } ");
+        //padre.add(nodoLlaI);
         padre.add(nodoDefL);
+        //padre.add(nodoLlaD);
         return padre;
     }
 }

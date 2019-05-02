@@ -25,7 +25,9 @@ public class regla27 extends nodo{
 
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R27 <Otro>");
+        DefaultMutableTreeNode nodoElse=new DefaultMutableTreeNode(" else ");
         DefaultMutableTreeNode nodoSentencia= this.sentenciaBloque.muestraGrafico();
+        padre.add(nodoElse);
         padre.add(nodoSentencia);
         return padre;
     }

@@ -30,9 +30,14 @@ public class regla21 extends nodo{
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R21 <Sentencia>");
         DefaultMutableTreeNode nodoIden= new DefaultMutableTreeNode("Identificador: "+ this.identificador);
+        DefaultMutableTreeNode nodoIgual=new DefaultMutableTreeNode(" = ");
         DefaultMutableTreeNode nodoExp=this.expresion.muestraGrafico();
+        DefaultMutableTreeNode nodoPunto=new DefaultMutableTreeNode(" ; ");
+        
         padre.add(nodoIden);
+        padre.add(nodoIgual);
         padre.add(nodoExp);
+        padre.add(nodoPunto);
         return padre;
     }
 }
