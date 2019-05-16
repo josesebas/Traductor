@@ -25,17 +25,23 @@ public class regla16 extends nodo{
         
         
     }     
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R16 <DefLocales> ::= <DefLocal> <DefLocales>");
-        this.defLocal.muestra();
-        this.defLocales.muestra();
+        
+        this.defLocales.muestra(tabla_simbolos, ambito, semantico);
+        this.defLocal.muestra(tabla_simbolos, ambito, semantico);
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        return "";
     }
     public DefaultMutableTreeNode muestraGrafico(){
+        System.out.println("R16");
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R16 <DefLocales>");
         DefaultMutableTreeNode nodoDefLocal= this.defLocal.muestraGrafico();
         DefaultMutableTreeNode nodoDefLocales=this.defLocales.muestraGrafico();
-        padre.add(nodoDefLocal);
         padre.add(nodoDefLocales);
+        padre.add(nodoDefLocal);
+        
         return padre;
     }
 }

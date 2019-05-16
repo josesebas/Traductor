@@ -15,13 +15,14 @@ public class regla26 extends nodo{
     public regla26(ArrayList<nodo> pila, ArrayList<String> datos){
         
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R26 <Otro>::=\\e");
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R26 <Otro>");
         DefaultMutableTreeNode vacio=new DefaultMutableTreeNode("\\e");
         padre.add(vacio);
+//        System.out.println("R26");
         return padre;
     }
 }

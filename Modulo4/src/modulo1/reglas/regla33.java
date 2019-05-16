@@ -15,7 +15,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class regla33 extends nodo{
     public regla33(ArrayList<nodo> pila, ArrayList<String> datos){
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R33 <ListaArgumentos>::=\\e" );
         
     }
@@ -23,6 +23,7 @@ public class regla33 extends nodo{
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R33 <ListaArgumentos>");
         DefaultMutableTreeNode vacio=new DefaultMutableTreeNode("\\e");
         padre.add(vacio);
+//        System.out.println("R33");
         return padre;
     }
 }

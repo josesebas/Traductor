@@ -18,14 +18,19 @@ public class regla17 extends nodo{
         this.defVar  = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);//desapilamos defVAr
     }  
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R17 <DefLocal> ::= <DefVar>");
-        this.defVar.muestra();
+        this.defVar.muestra(tabla_simbolos, ambito, semantico);
     }
-    public DefaultMutableTreeNode muestraGrafico(){
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        return "";
+    }
+    public DefaultMutableTreeNode muestraGrafico( ){
+        //System.out.println("R17");
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R17 <DefLocal>");
         DefaultMutableTreeNode nodoDefVar= this.defVar.muestraGrafico();
         padre.add(nodoDefVar);
+        
         return padre;
     }
 }

@@ -21,17 +21,19 @@ public class regla32 extends nodo{
         this.listaArgumentos = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R32 <Argumentos>::=<Expresion> <ListaArgumentos>");
-        this.expresion.muestra();
-        this.listaArgumentos.muestra();
+       
+        this.listaArgumentos.muestra(tabla_simbolos, ambito, semantico);
+         this.expresion.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R32 <Argumentos>");
         DefaultMutableTreeNode nodoExp= this.expresion.muestraGrafico();
         DefaultMutableTreeNode nodoLis=this.listaArgumentos.muestraGrafico();
-        padre.add(nodoExp);
-        padre.add(nodoLis);
+        
+        padre.add(nodoLis);padre.add(nodoExp);
+//        System.out.println("R32");
         return padre;
     }
 }

@@ -229,9 +229,9 @@ public class sintactico {
             
            
         }
-        if (this.programa!=null) {
+        /*if (this.programa!=null) {
             this.programa.muestra();
-        }
+        }*/
         
 
         

@@ -17,14 +17,15 @@ public class regla30 extends nodo{
         this.expresion = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R30 <ValorRegresa>::=<Expresion>");
-        this.expresion.muestra();
+        this.expresion.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R30 <ValorRegresa>");
         DefaultMutableTreeNode nodoExp=this.expresion.muestraGrafico();
         padre.add(nodoExp);
+//        System.out.println("R30");
         return padre;
     }
 }

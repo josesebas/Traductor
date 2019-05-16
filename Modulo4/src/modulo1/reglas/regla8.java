@@ -21,9 +21,9 @@ public class regla8 extends nodo{
         this.identificador = datos.get(datos.size()-1);
         datos.remove(datos.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R8 <ListaVar>::= , Identificador: "+this.identificador+" <ListaVar>");
-        this.listaVar.muestra();
+        this.listaVar.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R8 <Definiciones>");
@@ -33,6 +33,7 @@ public class regla8 extends nodo{
         padre.add(nodoComa);
         padre.add(nodoIde);
         padre.add(nodoList);
+ //       System.out.println("R8");
         return padre;
     }
 }

@@ -26,9 +26,24 @@ public class regla40 extends nodo {
         
         datos.remove(datos.size()-1);//desapila )
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito,ArrayList<String> semantico){
         System.out.println("R40 <LlamadaFunc>::= Identificador: "+this.identificador+" ( <Argumentos> ) ");
-        this.argumentos.muestra();
+        this.argumentos.muestra(tabla_simbolos, ambito, semantico);
+        System.out.println(semantico(tabla_simbolos, ambito, semantico));
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        boolean encontrado = false;
+        for (int i = 0; i < tabla_simbolos.size(); i++) {
+            if (tabla_simbolos.get(i).split("-")[1].equals(this.identificador)) {
+                encontrado =true;
+            }
+        }
+        if (encontrado) {
+            semantico.add("Success-llamada funcion existente");
+        }else{
+            semantico.add("Error-llamada funcion inexistente");
+        }
+        return "";
     }
      public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R40 <LlamadaFunc>");
@@ -40,6 +55,7 @@ public class regla40 extends nodo {
         //padre.add(nodoParI);
         padre.add(nodoArg);
         //padre.add(nodoParD);
+        //System.out.println("R40");
         return padre;
     }  
    

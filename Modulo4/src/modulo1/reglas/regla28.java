@@ -19,9 +19,9 @@ public class regla28  extends nodo{
         pila.remove(pila.size()-1);//desapila sentencia
         datos.remove(datos.size()-1);//desapila }
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R28 <Bloque>::={ <Sentencias> }");
-        this.sentencias.muestra();
+        this.sentencias.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R28 <Bloque>");
@@ -31,6 +31,7 @@ public class regla28  extends nodo{
         //padre.add(nodoLlaI);
         padre.add(nodoSen);
         //padre.add(nodoLlaD);
+//        System.out.println("R28");
         return padre;
     }
 }

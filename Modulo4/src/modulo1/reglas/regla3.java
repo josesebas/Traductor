@@ -22,17 +22,25 @@ public class regla3 extends nodo {
         pila.remove(pila.size()-1);//desapila definiciones
                 
     }  
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R3 <Definiciones> ::=<Definicion> <Definiciones>");
-        this.definicion.muestra();
-        this.definiciones.muestra();
+        
+        this.definiciones.muestra(tabla_simbolos, ambito, semantico);
+        this.definicion.muestra(tabla_simbolos, ambito, semantico);
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        return "";
     }
     public DefaultMutableTreeNode muestraGrafico(){
+        //System.out.println("R3");
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R3 <Definiciones>");
         DefaultMutableTreeNode nodoDefinicion= this.definicion.muestraGrafico();
+        
         DefaultMutableTreeNode nodoDefiniciones=this.definiciones.muestraGrafico();
-        padre.add(nodoDefinicion);
         padre.add(nodoDefiniciones);
+        padre.add(nodoDefinicion);
+        
+        
         return padre;
     }
 }

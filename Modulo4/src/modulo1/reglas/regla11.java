@@ -27,11 +27,33 @@ public class regla11 extends nodo {
         pila.remove(pila.size()-1);//elimina dato de lista param 
            
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R11 <Parametros>::= Tipo: "+this.tipo+"  Identificador: "+this.identificador+" <ListaParam>");
-        this.listaParam.muestra();
+        //-----------------------------------------Insercion
+        boolean encontrado = false;
+        for (int i = tabla_simbolos.size()-1; i >-1; i--) {
+            String temporal = tabla_simbolos.get(i);
+            String[] arreglo = temporal.split("-");            
+             if (this.identificador.equals(arreglo[1])&&(ambito.equals(arreglo[2]))) {
+                encontrado = true;
+            }
+        }
+        if (!encontrado) {
+            tabla_simbolos.add(this.tipo + "-" + this.identificador+"-"+ambito);
+            semantico.add("Success-Insercion en tabla de parametro "+this.identificador);
+            
+        }else{
+            semantico.add("Error-Parametro duplicado "+this.identificador+" ");
+        }
+        //----------------------------------------fin
+        this.listaParam.muestra(tabla_simbolos, ambito, semantico);
+        
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+        return this.tipo;
     }
     public DefaultMutableTreeNode muestraGrafico(){
+        //System.out.println("R11");
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R11 <Parametros>");
         DefaultMutableTreeNode nodoTipo= new DefaultMutableTreeNode("Tipo: "+this.tipo);
         DefaultMutableTreeNode nodoIde=new DefaultMutableTreeNode("Identificador: "+this.identificador);
@@ -39,6 +61,8 @@ public class regla11 extends nodo {
         padre.add(nodoTipo);
         padre.add(nodoIde);
         padre.add(nodoList);
+        
+
         return padre;
     }
 

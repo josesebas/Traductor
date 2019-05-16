@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package modulo1;
+import com.sun.xml.internal.ws.util.StringUtils;
+import java.awt.Color;
 import modulo1.reglas.nodo;
 import javax.swing.*;
 import java.util.*;
@@ -14,6 +16,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.GroupLayout.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+
+
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Eduardo
@@ -40,12 +49,15 @@ public class ventana extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        editor = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla_simbolos = new javax.swing.JTable();
         arbolView = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        editor = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        resultado_semantico = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,22 +68,25 @@ public class ventana extends javax.swing.JFrame {
             }
         });
 
-        editor.setColumns(20);
-        editor.setRows(5);
-        jScrollPane1.setViewportView(editor);
-
         tabla_simbolos.setForeground(new java.awt.Color(0, 0, 0));
         tabla_simbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Ambito", "Identificador", "Tipo"
+                "Tipo", "Identificador", "Ambito", "Valores | Parametros"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -83,6 +98,7 @@ public class ventana extends javax.swing.JFrame {
             tabla_simbolos.getColumnModel().getColumn(0).setResizable(false);
             tabla_simbolos.getColumnModel().getColumn(1).setResizable(false);
             tabla_simbolos.getColumnModel().getColumn(2).setResizable(false);
+            tabla_simbolos.getColumnModel().getColumn(3).setResizable(false);
         }
 
         arbolView.setText("Ver arbol");
@@ -94,43 +110,67 @@ public class ventana extends javax.swing.JFrame {
 
         jLabel1.setText("Tabla de simbolos");
 
+        editor.setColumns(20);
+        editor.setRows(5);
+        editor.setTabSize(1);
+        jScrollPane3.setViewportView(editor);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Análisis Semantico");
+
+        resultado_semantico.setEditable(false);
+        jScrollPane4.setViewportView(resultado_semantico);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(arbolView, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(109, 109, 109))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(167, 167, 167))))
+                        .addGap(167, 167, 167))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(arbolView)
                         .addGap(11, 11, 11)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addGap(33, 33, 33)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
 
@@ -152,7 +192,16 @@ public class ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-
+        DefaultTableModel model = (DefaultTableModel) this.tabla_simbolos.getModel();
+        int tam = model.getRowCount();
+        if (tam>0) {
+            System.out.println("Tamaño tabla "+tam);
+            while(tam>0){
+                tam--;
+                model.removeRow(tam);
+            }
+        }
+        
 
         //System.out.println(editor.getText().toString().toString().replaceAll("\\s", " "));
         analizadorLexico lex = new analizadorLexico(editor.getText().toString().replaceAll("\\s"," "));
@@ -163,16 +212,49 @@ public class ventana extends javax.swing.JFrame {
             System.out.println(tokens.get(i).numero+"\t"+tokens.get(i).simbolo);
         }*/
         sintactico sintac = new sintactico(tokens);
-        //construccion del arbol
-        
         sintactico_terminado = sintac.analizar();
+        ArrayList<String> listaSimbolos= new ArrayList<String>();
+        ArrayList<String> semantico= new ArrayList<String>();
+        sintactico_terminado.muestra(listaSimbolos, "Global", semantico);
+        //sintactico_terminado.semantico(listaSimbolos, "Global", semantico);
+        //System.out.println("Semantico"+semantico);
+        //String resultado_analisis="";
+        this.resultado_semantico.setText("");
+        for (int i = 0; i <semantico.size(); i++) {
+            javax.swing.text.StyledDocument doc = this.resultado_semantico.getStyledDocument();
+            javax.swing.text.Style style = doc.addStyle("StyleName", null);
+            
+            String[] resp  = semantico.get(i).split("-");
+            if (resp[0].equals("Success")) {
+                javax.swing.text.StyleConstants.setForeground(style, Color.BLUE);
+            }else if(resp[0].equals("Error")){
+                javax.swing.text.StyleConstants.setForeground(style, Color.RED);
+            }
+            try{
+                doc.insertString(doc.getLength(), semantico.get(i) + "\n", style);
+            }
+            catch (javax.swing.text.BadLocationException e) {
+            }
+        }
+        for (int i = 0; i<listaSimbolos.size(); i++) {
+            String temporal = listaSimbolos.get(i);
+            //System.out.println(temporal);
+            String[] partes =  temporal.split("-");
+            if (partes.length>3) {
+                model.addRow(new Object[]{partes[0],partes[1],partes[2],partes[3]});
+            }else{
+                model.addRow(new Object[]{partes[0],partes[1],partes[2]});          
+            }
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void arbolViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_arbolViewMouseClicked
         // TODO add your handling code here:
         if (sintactico_terminado!=null) {
             f=new JFrame();
+             //construccion del arbol
             DefaultMutableTreeNode programa = sintactico_terminado.muestraGrafico();  
+            System.out.println(programa);
             JTree arbol = new JTree(programa);
 
             JScrollPane scroll = new JScrollPane(arbol);
@@ -226,9 +308,12 @@ public class ventana extends javax.swing.JFrame {
     private javax.swing.JTextArea editor;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextPane resultado_semantico;
     private javax.swing.JTable tabla_simbolos;
     // End of variables declaration//GEN-END:variables
 }

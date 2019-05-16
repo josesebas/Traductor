@@ -31,17 +31,20 @@ public class analizadorLexico {
                     //--------------------------------------ESCAPAR LOS ESPACIOS
                     if(this.texto_analizar.charAt(indice)==' '||this.texto_analizar.charAt(indice)=='\t'||this.texto_analizar.charAt(indice)=='\n'){
                         indice++;
+                        if (indice<longitud) {
+                            
+                        
                         if (this.texto_analizar.charAt(indice)==' ') {
                             //System.out.println("espacio");
-                        }else if(this.texto_analizar.charAt(indice)=='\t'){
-                            //System.out.println("tab");
-                        }else if(this.texto_analizar.charAt(indice)=='\n'){
-                            //System.out.println("salto");
-                        }else{
-                            //System.out.println("raro : "+this.texto_analizar.charAt(indice));
-                        }
-                        this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
-                                                
+                            }else if(this.texto_analizar.charAt(indice)=='\t'){
+                                //System.out.println("tab");
+                            }else if(this.texto_analizar.charAt(indice)=='\n'){
+                                //System.out.println("salto");
+                            }else{
+                                //System.out.println("raro : "+this.texto_analizar.charAt(indice));
+                            }
+                            this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
+                        }                        
                         
                     //---------------------------------------ANALIZA ENTEROS
                     }else if (Character.isDigit(this.texto_analizar.charAt(indice))) {
@@ -451,24 +454,27 @@ public class analizadorLexico {
                         indice++;
                         finCadena(indice, longitud, 0,"identificador",this.valor_analizado);
                         if (indice<longitud) {
+                            this.valor_analizado +=this.texto_analizar.charAt(indice);
                             if (this.texto_analizar.charAt(indice)=='t') {
-                                this.valor_analizado+='t';
+                                //this.valor_analizado+='t';
                                 indice++;
                                 if (indice<longitud) {
                                     this.valor_analizado+=this.texto_analizar.charAt(indice);
                                     if (this.texto_analizar.charAt(indice)=='u') {
                                         indice++;
                                         if (indice<longitud) {
-                                            
+                                            this.valor_analizado+=this.texto_analizar.charAt(indice);
                                             if (this.texto_analizar.charAt(indice)=='r') {
-                                                this.valor_analizado+=this.texto_analizar.charAt(indice);
+                                                
                                                indice++;
                                                 if (indice<longitud) {
+                                                    this.valor_analizado+=this.texto_analizar.charAt(indice);
                                                       if (this.texto_analizar.charAt(indice)=='n') {
-                                                          this.valor_analizado+=this.texto_analizar.charAt(indice);
+                                                          //this.valor_analizado+=this.texto_analizar.charAt(indice);
                                                           indice++;
                                                           
                                                           if (indice<longitud) {
+                                                              //this.valor_analizado+=this.texto_analizar.charAt(indice);
                                                               if (Character.isLetterOrDigit(this.texto_analizar.charAt(indice))) {
                                                                 estado =4;
                                                             }else{
@@ -518,7 +524,6 @@ public class analizadorLexico {
                     }else{
                         this.valor_analizado=this.valor_analizado.substring(0, this.valor_analizado.length()-1);
                         estado=4;
-                        //this.respuesta=finCadena(indice, longitud, this.respuesta, "identificador\n");
                     }
                     break;
                 case 13:

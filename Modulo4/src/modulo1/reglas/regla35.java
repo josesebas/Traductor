@@ -18,15 +18,19 @@ public class regla35 extends nodo{
         this.llamadaFunc = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R35 <Termino>::=<LlamadaFunc>");
-        this.llamadaFunc.muestra();
+        this.llamadaFunc.muestra(tabla_simbolos, ambito, semantico);
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        return this.llamadaFunc.semantico(tabla_simbolos,ambito,semantico);
     }
 
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R35 <Termino>");
         DefaultMutableTreeNode nodoLlamada= this.llamadaFunc.muestraGrafico();
         padre.add(nodoLlamada);
+        //System.out.println("R35");
         return padre;
     }
 }

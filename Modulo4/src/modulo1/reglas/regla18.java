@@ -19,14 +19,18 @@ public class regla18 extends nodo{
         
         
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R18 <DefLocal>::=<Sentencia>");
-        this.sentencia.muestra();
+        this.sentencia.muestra(tabla_simbolos, ambito, semantico);
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        return "";
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R18 <DefLocal>");
         DefaultMutableTreeNode nodoSentencia= this.sentencia.muestraGrafico();
         padre.add(nodoSentencia);
+        //System.out.println("R18");
         return padre;
     }
 }

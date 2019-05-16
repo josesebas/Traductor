@@ -17,14 +17,19 @@ public class regla5 extends nodo{
         this.defFun  = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);//quitamos defFuncion
     }  
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R5 <Definicion> ::= <DefFunc>");
-        this.defFun.muestra();
+        this.defFun.muestra(tabla_simbolos, ambito, semantico);
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        return "";
     }
     public DefaultMutableTreeNode muestraGrafico(){
+        //System.out.println("R5");
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R5 <Definicion>");
         DefaultMutableTreeNode nodoDef= this.defFun.muestraGrafico();
         padre.add(nodoDef);
+        
         return padre;
     }
 }

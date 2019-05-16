@@ -21,11 +21,15 @@ public class regla14 extends nodo{
         
         datos.remove(datos.size()-1);//desapilamos  y }
     }  
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R14 <BloqFunc> ::= { <DefLocales> }");
-        this.defLocales.muestra();
+        this.defLocales.muestra(tabla_simbolos, ambito, semantico);
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        return "";
     }
     public DefaultMutableTreeNode muestraGrafico(){
+        //System.out.println("R14");
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R14 <BloqFun>");
         //DefaultMutableTreeNode nodoLlaI=new DefaultMutableTreeNode(" { ");
         DefaultMutableTreeNode nodoDefL=this.defLocales.muestraGrafico();
@@ -33,6 +37,7 @@ public class regla14 extends nodo{
         //padre.add(nodoLlaI);
         padre.add(nodoDefL);
         //padre.add(nodoLlaD);
+        
         return padre;
     }
 }

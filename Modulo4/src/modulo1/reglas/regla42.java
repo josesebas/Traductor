@@ -18,14 +18,15 @@ public class regla42 extends nodo{
         this.bloque = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R42 <SentenciaBloque>::=<Bloque>");
-        this.bloque.muestra();
+        this.bloque.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R42 <SentenciaBloque>");
         DefaultMutableTreeNode nodoBloq= this.bloque.muestraGrafico();
         padre.add(nodoBloq);
+ //       System.out.println("R42");
         return padre;
     }
 }

@@ -18,13 +18,17 @@ public class regla38 extends nodo{
         this.real = Float.parseFloat(datos.get(datos.size()-1));
         datos.remove(datos.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R38 <Termino>::=Real:");
+    }
+    public String semantico(ArrayList<String>tabla_simbolos, String ambito,ArrayList<String>semantico){
+        return "float-"+this.real;
     }
         public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R38 <Termino>");
         DefaultMutableTreeNode real=new DefaultMutableTreeNode("Real "+this.real);
         padre.add(real);
+//        System.out.println("R38");
         return padre;
     }
 }

@@ -19,9 +19,9 @@ public class regla24 extends nodo{
         pila.remove(pila.size()-1);//desspila valoregresa
         datos.remove(datos.size()-1);//desapila ;
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R24 <Sentencia>::= return <ValorRegresa> ;" );
-        this.valorRegresa.muestra();
+        this.valorRegresa.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R24 <Sentencia>");
@@ -29,6 +29,7 @@ public class regla24 extends nodo{
         DefaultMutableTreeNode nodoValor= this.valorRegresa.muestraGrafico();
         padre.add(nodoReturn);
         padre.add(nodoValor);
+//        System.out.println("R24");
         return padre;
     }
 }

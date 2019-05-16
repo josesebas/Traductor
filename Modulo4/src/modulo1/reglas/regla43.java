@@ -21,9 +21,9 @@ public class regla43 extends nodo{
 
         datos.remove(datos.size()-1);//desapila )
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R43 <Expresion>::=( <Expresion> )");
-        this.expresion.muestra();
+        this.expresion.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R43 <Expresion>");
@@ -33,6 +33,7 @@ public class regla43 extends nodo{
         //padre.add(nodoParI);
         padre.add(nodoExp);
         //padre.add(nodoParD);
+//        System.out.println("R43");
         return padre;
     }
 }

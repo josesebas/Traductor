@@ -25,11 +25,11 @@ public class regla22 extends nodo{
         this.otro = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);//desapila otro
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R22 <Sentencia>::= if ( <Expresion> ) <SentenciaBloque> <Otro>");
-        this.expresion.muestra();
-        this.sentenciaBloque.muestra();
-        this.otro.muestra();
+        this.otro.muestra(tabla_simbolos, ambito, semantico);
+        this.sentenciaBloque.muestra(tabla_simbolos, ambito, semantico);
+        this.expresion.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R22 <Sentencia>");
@@ -38,11 +38,15 @@ public class regla22 extends nodo{
         DefaultMutableTreeNode nodoSent=this.sentenciaBloque.muestraGrafico();
         //DefaultMutableTreeNode nodoParD=new DefaultMutableTreeNode(" ) ");
         DefaultMutableTreeNode nodoOtro  = this.otro.muestraGrafico();
-        padre.add(nodoExp);
+        
+        padre.add(nodoOtro);
+        
         //padre.add(nodoParI);
         padre.add(nodoSent);
         //padre.add(nodoParD);
-        padre.add(nodoOtro);
+        
+        padre.add(nodoExp);
+//        System.out.println("R22");
         return padre;
     }
 }

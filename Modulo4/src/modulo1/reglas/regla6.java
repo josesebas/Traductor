@@ -30,18 +30,46 @@ public class regla6 extends nodo{
                                     //desapilamos ;
         datos.remove(datos.size()-1);
     }  
-    public void muestra(){
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+        return "";
+    }
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R6 <DefVar> ::= Tipo: "+this.tipo+" Identificador: "+this.identificador+" <ListaVar> ;");
-        this.listaVar.muestra();
+        //-------------------------------------insercion----------------------
+        boolean encontrado = false;
+        for (int i = tabla_simbolos.size()-1; i >-1; i--) {
+            String temporal = tabla_simbolos.get(i);
+            String[] arreglo = temporal.split("-");
+            if (this.identificador.equals(arreglo[1])&&(ambito.equals(arreglo[2]))) {
+                encontrado = true;
+            }
+        }
+        if (!encontrado) {
+            tabla_simbolos.add(this.tipo + "-" + this.identificador+"-"+ambito);
+            semantico.add("Success-Insercion en tabla de variable "+this.identificador);
+        }else{
+            semantico.add("Error-Varible duplicada "+this.identificador);
+        }
+        //-------------------------------------fin------------------------
+        this.listaVar.muestra(tabla_simbolos, ambito, semantico);
+        
+    }
+    public String semantico(){
+        System.out.println("Retornar tipo: "+this.tipo);
+        return this.tipo;
     }
     public DefaultMutableTreeNode muestraGrafico(){
+        
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R6 <DefVar>");
         DefaultMutableTreeNode nodoTip= new DefaultMutableTreeNode("Tipo "+this.tipo);
         DefaultMutableTreeNode nodoIde= new DefaultMutableTreeNode("Identificador "+this.identificador);
+        
         DefaultMutableTreeNode nodoList= this.listaVar.muestraGrafico();
+        
         padre.add(nodoTip);
         padre.add(nodoIde);
         padre.add(nodoList);
+        
         return padre;
     }
 }

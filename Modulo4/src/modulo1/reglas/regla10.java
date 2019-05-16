@@ -15,14 +15,19 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class regla10 extends nodo {
     public regla10(ArrayList<nodo> pila, ArrayList<String> datos){
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, ArrayList<String> semantico){
         System.out.println("R10 <Parametros>::= \\e");
     }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+        return "";
+    }
+    
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R10 <Parametros>");
         DefaultMutableTreeNode vacio= new DefaultMutableTreeNode("\\e");
         padre.add(vacio);
+        //System.out.println("R10");
+
         return padre;
     }
-    
 }

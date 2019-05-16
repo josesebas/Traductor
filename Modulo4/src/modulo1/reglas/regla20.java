@@ -20,17 +20,19 @@ public class regla20 extends nodo{
         this.sentencias = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R20 <Sentencias>::=<Sentencia> <Sentencias>");
-        this.sentencia.muestra();
-        this.sentencias.muestra();
+        this.sentencia.muestra(tabla_simbolos, ambito, semantico);
+        this.sentencias.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R20 <Sentencias>");
         DefaultMutableTreeNode nodoSentencia= this.sentencia.muestraGrafico();
         DefaultMutableTreeNode nodoSentencias=this.sentencias.muestraGrafico();
-        padre.add(nodoSentencia);
         padre.add(nodoSentencias);
+        padre.add(nodoSentencia);
+        
+//        System.out.println("R20");
         return padre;
     }
 }

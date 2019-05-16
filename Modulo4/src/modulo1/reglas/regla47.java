@@ -26,19 +26,33 @@ public class regla47 extends nodo{
         this.expresion2 =pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R47 <Expresion>::= <Expresion> opSuma <Expresion>");
-        this.expresion1.muestra();
-        this.expresion2.muestra();
+        this.expresion2.muestra(tabla_simbolos, ambito, semantico);
+        this.expresion1.muestra(tabla_simbolos, ambito, semantico);
+        //System.out.println(semantico(tabla_simbolos, semantico));
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito,  ArrayList<String> semantico){
+        System.out.println("Semantico suma");
+        String[] temp = this.expresion2.semantico( tabla_simbolos, ambito, semantico).split("-");
+        String[] temp2 = this.expresion1.semantico(tabla_simbolos, ambito, semantico).split("-");
+        if(temp[0].equals(temp2[0])){
+            semantico.add("Success-Tipo de datos iguales");
+            return temp[0]+"-"+temp[1]+"+"+temp2[1];
+        }else{
+            semantico.add("Error-Tipo de datos diferentes");
+            return "DIF";
+        }
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R47 <Expresion>");
         DefaultMutableTreeNode nodoExp1= this.expresion1.muestraGrafico();
          DefaultMutableTreeNode nodoOp=new DefaultMutableTreeNode(" opSum "+ this.opSum);
         DefaultMutableTreeNode nodoExp2= this.expresion2.muestraGrafico();
-        padre.add(nodoExp1);
-        padre.add(nodoOp);
         padre.add(nodoExp2);
+        padre.add(nodoOp);
+        padre.add(nodoExp1);
+//        System.out.println("R47");
         return padre;
     }
 }

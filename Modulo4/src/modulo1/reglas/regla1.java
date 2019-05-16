@@ -14,14 +14,20 @@ public class regla1 extends nodo {
         this.definiciones = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);//elimina dato que agregamos a definiciones
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R1 <programa> ::= <Definiciones>");
-        this.definiciones.muestra();
+        this.definiciones.muestra(tabla_simbolos, ambito, semantico);
     }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+        return this.definiciones.semantico(tabla_simbolos, ambito, semantico);
+    }
+    
     public DefaultMutableTreeNode muestraGrafico(){
+        //System.out.println("R1");
         DefaultMutableTreeNode programa = new DefaultMutableTreeNode("R1 <programa>");
         DefaultMutableTreeNode definiciones= this.definiciones.muestraGrafico();  
         programa.add(definiciones);
+        
         return programa;
     }
 }

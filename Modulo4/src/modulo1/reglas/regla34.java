@@ -22,10 +22,11 @@ public class regla34 extends nodo{
         this.listaArgumentos = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R34 <ListaArgumentos>::= , <Expresion> <ListaArgumentos>");
-        this.expresion.muestra();
-        this.listaArgumentos.muestra();
+        this.expresion.muestra(tabla_simbolos, ambito, semantico);
+        this.listaArgumentos.muestra(tabla_simbolos, ambito, semantico);
+        
     }
 
     public DefaultMutableTreeNode muestraGrafico(){
@@ -34,8 +35,12 @@ public class regla34 extends nodo{
         DefaultMutableTreeNode nodoExp= this.expresion.muestraGrafico();
         DefaultMutableTreeNode nodoList=this.listaArgumentos.muestraGrafico();
         padre.add(nodoComa);
+        
         padre.add(nodoExp);
         padre.add(nodoList);
+        
+        
+        //System.out.println("R34");
         return padre;
     }
             

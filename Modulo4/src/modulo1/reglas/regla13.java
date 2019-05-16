@@ -29,16 +29,40 @@ public class regla13 extends nodo {
         
 
     }  
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R13 <ListaParam> ::= , Tipo: "+this.tipo+" Identificador: "+this.identificador+"<ListaParam>");
-        this.listaParam.muestra();
+        //---------------------------------------------Insercion
+        boolean encontrado = false;
+        for (int i = tabla_simbolos.size()-1; i >-1; i--) {
+            String temporal = tabla_simbolos.get(i);
+            String[] arreglo = temporal.split("-");
+             if (this.identificador.equals(arreglo[1])&&(ambito.equals(arreglo[2]))) {
+                encontrado = true;
+            }
+        }
+        if (!encontrado) {
+            tabla_simbolos.add(this.tipo + "-" + this.identificador+"-"+ambito);
+            semantico.add("Success-Insercion en tabla de parametro "+this.identificador);
+        }else{
+            semantico.add("Error-Parametro duplicado "+this.identificador);
+        }
+        //----------------------------------------------fin
+        this.listaParam.muestra(tabla_simbolos, ambito, semantico);
+        
+    }
+    public String semantico(){
+        System.out.println("Retornar tipo: "+this.tipo);
+        return this.tipo;
     }
     public DefaultMutableTreeNode muestraGrafico(){
-        DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R13 <ListaPAram>");
+        //System.out.println("R13");
+
+        DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R13 <ListaParam>");
         DefaultMutableTreeNode nodoComa=new DefaultMutableTreeNode(" , ");
         DefaultMutableTreeNode nodoTipo=new DefaultMutableTreeNode("Tipo: "+this.tipo);
         DefaultMutableTreeNode nodoIden= new DefaultMutableTreeNode("Identificador: "+this.identificador);
         DefaultMutableTreeNode nodoList = this.listaParam.muestraGrafico();
+        
         padre.add(nodoComa);
         padre.add(nodoTipo);
         padre.add(nodoIden);

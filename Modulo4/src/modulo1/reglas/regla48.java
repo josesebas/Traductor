@@ -26,19 +26,20 @@ public class regla48 extends nodo{
         this.expresion2 =pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
         System.out.println("R48 <Expresion>::= <Expresion> opRelac <Expresion>");
-        this.expresion1.muestra();
-        this.expresion2.muestra();
+        this.expresion2.muestra(tabla_simbolos, ambito, semantico);
+        this.expresion1.muestra(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R48 <Expresion>");
         DefaultMutableTreeNode nodoExp1= this.expresion1.muestraGrafico();
          DefaultMutableTreeNode nodoOp=new DefaultMutableTreeNode(" opRel "+ this.opRel);
         DefaultMutableTreeNode nodoExp2= this.expresion2.muestraGrafico();
-        padre.add(nodoExp1);
-        padre.add(nodoOp);
         padre.add(nodoExp2);
+        padre.add(nodoOp);
+        padre.add(nodoExp1);
+//        System.out.println("R48");
         return padre;
     }
 }

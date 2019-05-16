@@ -18,15 +18,20 @@ public class regla52 extends nodo{
         this.termino = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R52 <Expresion>::= <Termino>");
-        this.termino.muestra();
+        this.termino.muestra(tabla_simbolos, ambito, semantico);
         
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito,ArrayList<String>semantico){
+        
+        return this.termino.semantico(tabla_simbolos, ambito, semantico);
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R52 <Expresion>");
         DefaultMutableTreeNode nodoTerm= this.termino.muestraGrafico();
         padre.add(nodoTerm);
+//        System.out.println("R52");
         return padre;
     }
 }

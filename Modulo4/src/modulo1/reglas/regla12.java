@@ -15,13 +15,16 @@ public class regla12 extends nodo {
     public regla12(ArrayList<nodo> pila, ArrayList<String> datos){
         
     }
-    public void muestra(){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
         System.out.println("R12 <ListaParam> ::= \\e ");
     }
     public DefaultMutableTreeNode muestraGrafico(){
+        //System.out.println("R12");
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R12 <ListaParam>");
         DefaultMutableTreeNode vacio= new DefaultMutableTreeNode("\\e");
         padre.add(vacio);
+        
+
         return padre;
     }
 }
