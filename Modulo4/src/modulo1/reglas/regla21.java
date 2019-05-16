@@ -27,11 +27,11 @@ public class regla21 extends nodo{
         System.out.println("R21 <Sentencia>::= Identificador: "+this.identificador +" =  <Expresion> ;");
         this.expresion.muestra(tabla_simbolos, ambito, semantico);
         
-        System.out.println("semantico asignacion");
+        //System.out.println("semantico asignacion");
         
         System.out.println(semantico(tabla_simbolos, ambito,semantico));
         
-        System.out.println(tabla_simbolos);
+        //System.out.println(tabla_simbolos);
         
     }
     public String semantico(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String>semantico){

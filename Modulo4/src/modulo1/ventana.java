@@ -246,6 +246,7 @@ public class ventana extends javax.swing.JFrame {
                 model.addRow(new Object[]{partes[0],partes[1],partes[2]});          
             }
         }
+        System.out.println(listaSimbolos);
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void arbolViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_arbolViewMouseClicked
