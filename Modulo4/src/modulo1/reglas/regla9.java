@@ -34,7 +34,7 @@ public class regla9 extends nodo{
         pila.remove(pila.size()-1);//desapilamos bloqueFucion
         
     }  
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R9 <DefFunc> ::= Tipo: "+this.tipo+" Identificador: "+this.identificador+" ( <Parametros> ) <BloqueFun>");
         //--------------------------------Insercion------------------
         boolean encontrado = false;
@@ -56,12 +56,15 @@ public class regla9 extends nodo{
         //------------------------------Cambio de ambito
         ambito = this.identificador;
         
-        this.bloqFunc.muestra(tabla_simbolos, ambito, semantico);
-        this.parametros.muestra(tabla_simbolos, ambito, semantico);
+        this.bloqFunc.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+        this.parametros.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
         
     }
-    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico, String geracionCodigo){
         return this.tipo;
+    }
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     
     public DefaultMutableTreeNode muestraGrafico(){

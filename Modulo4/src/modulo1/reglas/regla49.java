@@ -26,10 +26,14 @@ public class regla49 extends nodo{
         this.expresion2 =pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R49 <Expresion>::= <Expresion> opIgualdad <Expresion>");
-        this.expresion2.muestra(tabla_simbolos, ambito, semantico);
-        this.expresion1.muestra(tabla_simbolos, ambito, semantico);
+        this.expresion2.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+        this.expresion1.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R49 <Expresion>");

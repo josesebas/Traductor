@@ -22,10 +22,14 @@ public class regla34 extends nodo{
         this.listaArgumentos = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
+    }
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R34 <ListaArgumentos>::= , <Expresion> <ListaArgumentos>");
-        this.expresion.muestra(tabla_simbolos, ambito, semantico);
-        this.listaArgumentos.muestra(tabla_simbolos, ambito, semantico);
+        this.expresion.muestra(tabla_simbolos, ambito, semantico,generacionCodigo);
+        this.listaArgumentos.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
         
     }
 

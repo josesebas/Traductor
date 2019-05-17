@@ -19,9 +19,13 @@ public class regla44 extends nodo{
         this.expresion = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R44 <Expresion>::= opSuma <Expresion>");
-        this.expresion.muestra(tabla_simbolos, ambito, semantico);
+        this.expresion.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R44 <Definicion>");

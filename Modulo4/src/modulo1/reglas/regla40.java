@@ -26,12 +26,16 @@ public class regla40 extends nodo {
         
         datos.remove(datos.size()-1);//desapila )
     }
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito,ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito,ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R40 <LlamadaFunc>::= Identificador: "+this.identificador+" ( <Argumentos> ) ");
-        this.argumentos.muestra(tabla_simbolos, ambito, semantico);
-        System.out.println(semantico(tabla_simbolos, ambito, semantico));
+        this.argumentos.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+        System.out.println(semantico(tabla_simbolos, ambito, semantico, generacionCodigo));
     }
-    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
+    }
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico, String generacionCodigo){
         boolean encontrado = false;
         for (int i = 0; i < tabla_simbolos.size(); i++) {
             if (tabla_simbolos.get(i).split("-")[1].equals(this.identificador)) {

@@ -24,11 +24,15 @@ public class regla23 extends nodo{
         datos.remove(datos.size()-1);//desapila parentesis
         pila.remove(pila.size()-1);//despila bloque
     }
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R23 <Sentencia>::= while ( <Expresion> ) <Bloque>");
         
-        this.bloque.muestra(tabla_simbolos, ambito, semantico);
-        this.expresion.muestra(tabla_simbolos, ambito, semantico);
+        this.bloque.muestra(tabla_simbolos, ambito, semantico,generacionCodigo);
+        this.expresion.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R23 <Sentencia>");

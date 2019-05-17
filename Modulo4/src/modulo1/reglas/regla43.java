@@ -21,9 +21,13 @@ public class regla43 extends nodo{
 
         datos.remove(datos.size()-1);//desapila )
     }
-    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R43 <Expresion>::=( <Expresion> )");
-        this.expresion.muestra(tabla_simbolos, ambito, semantico);
+        this.expresion.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R43 <Expresion>");

@@ -27,7 +27,7 @@ public class regla11 extends nodo {
         pila.remove(pila.size()-1);//elimina dato de lista param 
            
     }
-    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R11 <Parametros>::= Tipo: "+this.tipo+"  Identificador: "+this.identificador+" <ListaParam>");
         //-----------------------------------------Insercion
         boolean encontrado = false;
@@ -46,11 +46,15 @@ public class regla11 extends nodo {
             semantico.add("Error-Parametro duplicado "+this.identificador+" ");
         }
         //----------------------------------------fin
-        this.listaParam.muestra(tabla_simbolos, ambito, semantico);
+        this.listaParam.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
         
     }
-    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
         return this.tipo;
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         //System.out.println("R11");

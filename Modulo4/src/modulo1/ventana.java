@@ -12,6 +12,7 @@ import java.util.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
 import javax.swing.text.BadLocationException;
 import javax.swing.GroupLayout.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -20,7 +21,12 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.table.DefaultTableModel;
 /**
@@ -215,7 +221,8 @@ public class ventana extends javax.swing.JFrame {
         sintactico_terminado = sintac.analizar();
         ArrayList<String> listaSimbolos= new ArrayList<String>();
         ArrayList<String> semantico= new ArrayList<String>();
-        sintactico_terminado.muestra(listaSimbolos, "Global", semantico);
+        String generacionCodigo="";
+        sintactico_terminado.muestra(listaSimbolos, "Global", semantico, generacionCodigo);
         //sintactico_terminado.semantico(listaSimbolos, "Global", semantico);
         //System.out.println("Semantico"+semantico);
         //String resultado_analisis="";
@@ -247,6 +254,77 @@ public class ventana extends javax.swing.JFrame {
             }
         }
         System.out.println(listaSimbolos);
+        System.out.println("Generacion codigo");
+        
+        generacionCodigo = "section .data\n";
+        //declaraciones
+       for (int i = 0; i<listaSimbolos.size(); i++) {
+            String temporal = listaSimbolos.get(i);
+            //System.out.println(temporal);
+            String[] partes =  temporal.split("-");
+            if (partes.length>3) {
+                if(partes[3].indexOf("+")==-1){
+                    if (partes[0].equals("int")) {
+                        generacionCodigo +="\t"+partes[1]+" dq "+"'"+partes[3]+"'\n";
+                    }else if(partes[0].equals("string")){
+                        generacionCodigo +="\t"+partes[1]+" dq "+"0xA,0xD,'"+partes[3]+"',0xA,0xD \n";
+                        generacionCodigo +="\tlen_"+partes[1]+" equ $ - "+partes[1]+"\n";
+                    }           
+                }else{
+                    if (partes[0].equals("int")) {
+                        generacionCodigo +="\t"+partes[1]+" dq "+"'0'\n";
+                    }else if(partes[0].equals("string")){
+                        generacionCodigo +="\t"+partes[1]+" dq "+"0xA,0xD,'',0xA,0xD \n";
+                        generacionCodigo +="\tlen_"+partes[1]+" equ $ - "+partes[1]+"\n";
+                    }
+                }
+            }
+        }
+        //codigo
+        generacionCodigo +="section .text\n" +"\tglobal _start\n" +"_start:\n";
+        for (int i = 0; i<listaSimbolos.size(); i++) {
+            String temporal = listaSimbolos.get(i);
+            //System.out.println(temporal);
+            String[] partes =  temporal.split("-");
+            if (partes.length>3) {
+                if(partes[3].indexOf("+")!=-1){
+                    System.out.println(partes[3]);
+                    String[] elementos = partes[3].split("[+]+");
+                    System.out.println(elementos);
+                    for (int j = 0; j < elementos.length; j++) {
+                        generacionCodigo += "\tmov eax,["+partes[1]+"]\n" +"\tsub  eax, '0'\n";
+                        generacionCodigo += "\tmov ebx,["+elementos[j]+"]\n"+"\tsub ebx, '0'\n";
+                        generacionCodigo += "\tadd eax, ebx\n" +"\tadd eax, '0'\n";
+                        generacionCodigo += "\tmov ["+partes[1]+"], eax\n";
+                       
+                    }
+                    //impresion
+                    generacionCodigo +="\tmov ecx, "+partes[1]+"\n"+"\tmov edx, 1\n"+"\tmov ebx,1\n"+"\tmov eax,4\n"+"\tint 0x80\n\n";
+                
+                }else if(partes[0].equals("string")){
+                    generacionCodigo +="\tmov ecx,"+partes[1]+"\n"+"\tmov edx, len_"+partes[1]+"\n"+"\tmov ebx,1\n"+"\tmov eax,4\n"+"\tint 0x80\n\n";
+                }
+            }
+        }
+        generacionCodigo +="\tmov eax,1\n"+"\tint 0x80\n";
+        System.out.println(generacionCodigo);
+        BufferedWriter output = null;
+        
+        try {
+            File file = new File("generacion_codigo_"+LocalDateTime.now().getDayOfMonth()+"_"+LocalDateTime.now().getHour()+"_"+LocalDateTime.now().getMinute()+".txt");
+            output = new BufferedWriter(new FileWriter(file));
+            output.write(generacionCodigo);
+        } catch ( IOException e ) {
+            e.printStackTrace();
+        } finally {
+          if ( output != null ) {
+              try {
+                  output.close();
+              } catch (IOException ex) {
+                  Logger.getLogger(ventana.class.getName()).log(Level.SEVERE, null, ex);
+              }
+          }
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void arbolViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_arbolViewMouseClicked

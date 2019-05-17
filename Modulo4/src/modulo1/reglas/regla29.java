@@ -16,8 +16,12 @@ public class regla29 extends nodo{
     public regla29(ArrayList<nodo> pila, ArrayList<String> datos){
     
     }
-    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R29 <ValorRegresa>::=\\e");
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R29 <ValorRegresa>");

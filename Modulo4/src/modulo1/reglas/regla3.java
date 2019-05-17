@@ -22,11 +22,15 @@ public class regla3 extends nodo {
         pila.remove(pila.size()-1);//desapila definiciones
                 
     }  
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R3 <Definiciones> ::=<Definicion> <Definiciones>");
         
-        this.definiciones.muestra(tabla_simbolos, ambito, semantico);
-        this.definicion.muestra(tabla_simbolos, ambito, semantico);
+        this.definiciones.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+        this.definicion.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
         return "";

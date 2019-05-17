@@ -18,9 +18,13 @@ public class regla41 extends nodo{
         this.sentencia = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);
     }
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R41 <SentenciaBloque>::=<Sentencia>");
-        this.sentencia.muestra(tabla_simbolos, ambito, semantico);
+        this.sentencia.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R41 <SentenciaBloque>");

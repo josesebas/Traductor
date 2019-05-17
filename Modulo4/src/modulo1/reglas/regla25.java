@@ -18,9 +18,13 @@ public class regla25 extends nodo{
         pila.remove(pila.size()-1);
         datos.remove(datos.size()-1);//desapila ;
     }
-    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R25 <Sentencia>::=<LlamadaFunc> ;");
-        this.llamadaFunc.muestra(tabla_simbolos, ambito, semantico);
+        this.llamadaFunc.muestra(tabla_simbolos, ambito, semantico,generacionCodigo);
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R25 <Sentencia>");

@@ -25,11 +25,15 @@ public class regla22 extends nodo{
         this.otro = pila.get(pila.size()-1);
         pila.remove(pila.size()-1);//desapila otro
     }
-    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R22 <Sentencia>::= if ( <Expresion> ) <SentenciaBloque> <Otro>");
-        this.otro.muestra(tabla_simbolos, ambito, semantico);
-        this.sentenciaBloque.muestra(tabla_simbolos, ambito, semantico);
-        this.expresion.muestra(tabla_simbolos, ambito, semantico);
+        this.otro.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+        this.sentenciaBloque.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+        this.expresion.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R22 <Sentencia>");

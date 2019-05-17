@@ -23,18 +23,17 @@ public class regla21 extends nodo{
         datos.remove(datos.size()-1);
         datos.remove(datos.size()-1);
     }   
-    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos,String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R21 <Sentencia>::= Identificador: "+this.identificador +" =  <Expresion> ;");
-        this.expresion.muestra(tabla_simbolos, ambito, semantico);
+        this.expresion.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
         
         //System.out.println("semantico asignacion");
         
-        System.out.println(semantico(tabla_simbolos, ambito,semantico));
-        
+        System.out.println(semantico(tabla_simbolos, ambito,semantico, generacionCodigo));
         //System.out.println(tabla_simbolos);
-        
+        //System.out.println(generacionCodigo(tabla_simbolos, ambito, semantico, generacionCodigo));
     }
-    public String semantico(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String>semantico){
+    public String semantico(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String>semantico,String generacionCodigo){
         String respuesta ="";
         int posicion=0;
         System.out.println("analizando "+this.identificador);
@@ -45,7 +44,7 @@ public class regla21 extends nodo{
                 posicion=i;
             }
         }
-        String[] temp = this.expresion.semantico(tabla_simbolos, ambito,semantico).split("-");
+        String[] temp = this.expresion.semantico(tabla_simbolos, ambito,semantico,generacionCodigo).split("-");
         System.out.println("tipo dato asignacion der "+temp[0]);
         if (respuesta.equals("")) {
             //System.out.println("Variable no declarada en asignacion");
@@ -63,6 +62,10 @@ public class regla21 extends nodo{
             semantico.add("Error-Tipos de datos diferentes en asignacion");
             return "";
         }
+    }
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
     public DefaultMutableTreeNode muestraGrafico(){
         DefaultMutableTreeNode padre = new DefaultMutableTreeNode("R21 <Sentencia>");

@@ -30,10 +30,12 @@ public class regla6 extends nodo{
                                     //desapilamos ;
         datos.remove(datos.size()-1);
     }  
-    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String>semantico){
-        return "";
+
+    
+    public String generacionCodigo(ArrayList<String>tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
+        return null;
     }
-    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico){
+    public void muestra(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("R6 <DefVar> ::= Tipo: "+this.tipo+" Identificador: "+this.identificador+" <ListaVar> ;");
         //-------------------------------------insercion----------------------
         boolean encontrado = false;
@@ -51,10 +53,10 @@ public class regla6 extends nodo{
             semantico.add("Error-Varible duplicada "+this.identificador);
         }
         //-------------------------------------fin------------------------
-        this.listaVar.muestra(tabla_simbolos, ambito, semantico);
+        this.listaVar.muestra(tabla_simbolos, ambito, semantico, generacionCodigo);
         
     }
-    public String semantico(){
+    public String semantico(ArrayList<String> tabla_simbolos, String ambito, ArrayList<String> semantico, String generacionCodigo){
         System.out.println("Retornar tipo: "+this.tipo);
         return this.tipo;
     }
