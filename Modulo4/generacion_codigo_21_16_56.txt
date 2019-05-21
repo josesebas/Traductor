@@ -1,0 +1,37 @@
+section .data
+	b dq '2'
+	c dq '3'
+	a dq '1'
+	d dq '0'
+section .text
+	global _start
+_start:
+	mov eax,[d]
+	sub  eax, '0'
+	mov ebx,[a]
+	sub ebx, '0'
+	add eax, ebx
+	add eax, '0'
+	mov [d], eax
+	mov eax,[d]
+	sub  eax, '0'
+	mov ebx,[b]
+	sub ebx, '0'
+	add eax, ebx
+	add eax, '0'
+	mov [d], eax
+	mov eax,[d]
+	sub  eax, '0'
+	mov ebx,[c]
+	sub ebx, '0'
+	add eax, ebx
+	add eax, '0'
+	mov [d], eax
+	mov ecx, d
+	mov edx, 1
+	mov ebx,1
+	mov eax,4
+	int 0x80
+
+	mov eax,1
+	int 0x80

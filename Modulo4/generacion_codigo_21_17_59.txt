@@ -1,0 +1,37 @@
+section .data
+	a dq '0'
+	b dq '5'
+	c dq '1'
+	cadena dq 0xA,0xD,'"Hola mundo merezco mi 100"',0xA,0xD 
+	len_cadena equ $ - cadena
+section .text
+	global _start
+_start:
+	mov eax,[a]
+	sub  eax, '0'
+	mov ebx,[b]
+	sub ebx, '0'
+	add eax, ebx
+	add eax, '0'
+	mov [a], eax
+	mov eax,[a]
+	sub  eax, '0'
+	mov ebx,[c]
+	sub ebx, '0'
+	add eax, ebx
+	add eax, '0'
+	mov [a], eax
+	mov ecx, a
+	mov edx, 1
+	mov ebx,1
+	mov eax,4
+	int 0x80
+
+	mov ecx,cadena
+	mov edx, len_cadena
+	mov ebx,1
+	mov eax,4
+	int 0x80
+
+	mov eax,1
+	int 0x80
